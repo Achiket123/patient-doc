@@ -23,7 +23,7 @@ export default function DoctorSchedule() {
         const slotsRef = collection(db, `doctors/${user.uid}/availability/${dateStr}/slots`);
 
         const unsubscribe = onSnapshot(slotsRef, (snap) => {
-            const fetched = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            const fetched = snap.docs.map(d => ({ id: d.id, ...(d.data() as Record<string, any>) }));
             fetched.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
             setSlots(fetched);
             setLoading(false);
@@ -60,7 +60,7 @@ export default function DoctorSchedule() {
 
             times.forEach(t => {
                 const isoTime = convertTo24(t, selectedDate);
-                const slotId = Date.now().toString() + Math.random().toString(36).substring(7);
+                const slotId = isoTime.replace(/[:.]/g, '-');
                 const slotRef = doc(db, `doctors/${user.uid}/availability/${dateStr}/slots`, slotId);
                 batch.set(slotRef, {
                     time: isoTime,
@@ -149,8 +149,8 @@ export default function DoctorSchedule() {
                                 key={slot.id}
                                 onClick={() => toggleSlot(slot.id, slot.isOpen)}
                                 className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${slot.isOpen
-                                        ? 'bg-primary-fixed/20 border-primary cursor-pointer text-on-surface hover:bg-primary-fixed/30'
-                                        : 'bg-surface-container-high border-transparent text-outline cursor-pointer opacity-70 hover:opacity-100'
+                                    ? 'bg-primary-fixed/20 border-primary cursor-pointer text-on-surface hover:bg-primary-fixed/30'
+                                    : 'bg-surface-container-high border-transparent text-outline cursor-pointer opacity-70 hover:opacity-100'
                                     }`}
                             >
                                 <span className="font-bold">{format(new Date(slot.time), 'hh:mm a')}</span>
