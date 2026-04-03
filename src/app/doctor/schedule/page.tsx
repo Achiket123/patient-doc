@@ -6,13 +6,19 @@ import { format, addDays } from "date-fns";
 import { db } from "@/services/firebase/config";
 import { doc, writeBatch, collection, onSnapshot } from "firebase/firestore";
 
+type Slot = {
+    id: string;
+    time: string;
+    isOpen: boolean;
+};
+
 export default function DoctorSchedule() {
     const { user } = useAppStore();
 
     const dates = Array.from({ length: 14 }).map((_, i) => addDays(new Date(), i));
     const [selectedDate, setSelectedDate] = useState<Date>(dates[0]);
 
-    const [slots, setSlots] = useState<any[]>([]);
+    const [slots, setSlots] = useState<Slot[]>([]);
     const [loading, setLoading] = useState(false);
     const [generating, setGenerating] = useState(false);
 
@@ -23,8 +29,15 @@ export default function DoctorSchedule() {
         const slotsRef = collection(db, `doctors/${user.uid}/availability/${dateStr}/slots`);
 
         const unsubscribe = onSnapshot(slotsRef, (snap) => {
-            const fetched = snap.docs.map(d => ({ id: d.id, ...(d.data() as Record<string, any>) }));
-            fetched.sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime());
+            const fetched: Slot[] = snap.docs.map(d => {
+                const data = d.data() as { time?: string; isOpen?: boolean };
+                return {
+                    id: d.id,
+                    time: data.time ?? "",
+                    isOpen: data.isOpen ?? false
+                };
+            });
+            fetched.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
             setSlots(fetched);
             setLoading(false);
         });
@@ -153,7 +166,7 @@ export default function DoctorSchedule() {
                                     : 'bg-surface-container-high border-transparent text-outline cursor-pointer opacity-70 hover:opacity-100'
                                     }`}
                             >
-                                <span className="font-bold">{format(new Date(slot.time), 'hh:mm a')}</span>
+                                <span className="font-bold">{slot.time && format(new Date(slot.time), 'hh:mm a')}</span>
                                 <span className="text-[10px] uppercase font-bold mt-1 tracking-wider">{slot.isOpen ? 'Active' : 'Disabled'}</span>
                             </button>
                         ))}
