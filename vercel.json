@@ -5,6 +5,12 @@
     "installCommand": "npm install",
     "outputDirectory": ".next",
     "env": {
-        "NEXT_PUBLIC_APP_ENV": "production"
+        "NEXT_PUBLIC_APP_ENV": "production",
+        "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyAS_hxl269Vor0AsnaskmtNv0y3mlSFM_M",
+        "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "doctor-patient-a033d.firebaseapp.com",
+        "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "doctor-patient-a033d",
+        "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "doctor-patient-a033d.firebasestorage.app",
+        "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "689158110253",
+        "NEXT_PUBLIC_FIREBASE_APP_ID": "1:689158110253:web:6184f81add043a0cb90ca4"
     }
 }

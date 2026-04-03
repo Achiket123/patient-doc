@@ -1,50 +1,101 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Auth rule
-    function isAuthenticated() {
+
+    // ── Helpers ──
+    function isAuth() {
       return request.auth != null;
     }
-    
+    function isOwner(uid) {
+      return request.auth.uid == uid;
+    }
+    function isDoctor() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'doctor';
+    }
+
+    // ── Users ──
     match /users/{uid} {
-      allow read: if isAuthenticated();
-      allow write: if request.auth.uid == uid;
+      allow read: if isAuth();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid);
     }
 
+    // ── Patients profile ──
     match /patients/{uid} {
-        allow read, write: if request.auth.uid == uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'doctor';
+      allow read: if isOwner(uid) || isDoctor();
+      allow write: if isOwner(uid);
     }
 
+    // ── Doctors profile ──
     match /doctors/{uid} {
-        allow read: if isAuthenticated();
-        allow write: if request.auth.uid == uid;
-    }
+      allow read: if isAuth();
+      allow write: if isOwner(uid);
 
-    match /doctors/{uid}/availability/{date}/slots/{slotId} {
-        allow read: if isAuthenticated();
-        allow write: if request.auth.uid == uid || isAuthenticated(); // Patients need to write to book a slot
-    }
-
-    match /appointments/{id} {
-      allow read, write: if isAuthenticated() && (request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.doctorId || request.auth.uid == request.resource.data.patientId);
-    }
-    
-    match /messages/{threadId} {
-      allow read, write: if isAuthenticated() && request.auth.uid in resource.data.participants;
-      
-      match /chats/{chatId} {
-         allow read, write: if isAuthenticated() && request.auth.uid in get(/databases/$(database)/documents/messages/$(threadId)).data.participants;
+      // Availability slots (patients can read; patients+doctors can write for booking)
+      match /availability/{date}/slots/{slotId} {
+        allow read: if isAuth();
+        // Doctor creates slots, patients update isOpen via runTransaction
+        allow write: if isAuth();
       }
     }
-    
-    // Top-level records accessible by the patient or their doctor
-    match /prescriptions/{id} {
-       allow read, write: if isAuthenticated() && (request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.doctorId || request.auth.uid == request.resource.data.doctorId);
+
+    // ── Appointments ──
+    match /appointments/{id} {
+      // Create: patient must set themselves as patientId
+      allow create: if isAuth()
+                    && request.resource.data.patientId == request.auth.uid;
+      // Read: only the patient or doctor on this appointment
+      allow read: if isAuth()
+                  && (resource.data.patientId == request.auth.uid
+                      || resource.data.doctorId == request.auth.uid);
+      // Update: only the doctor (for status/notes/SOAP)
+      allow update: if isAuth()
+                    && resource.data.doctorId == request.auth.uid;
     }
-    // Similar for labs, visits, vitals
-    match /{collection=**}/{id} {
-       allow read, write: if isAuthenticated() && (request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.doctorId || request.auth.uid == request.resource.data.doctorId);
+
+    // ── Chats (thread metadata) ──
+    match /chats/{threadId} {
+      // Read: must be a participant
+      allow read: if isAuth()
+                  && request.auth.uid in resource.data.participants;
+      // Create: must include self in participants
+      allow create: if isAuth()
+                    && request.auth.uid in request.resource.data.participants;
+      // Update: must be a participant (for lastMessage/updatedAt)
+      allow update: if isAuth()
+                    && request.auth.uid in resource.data.participants;
+
+      // Messages subcollection
+      match /messages/{msgId} {
+        allow read: if isAuth()
+                    && request.auth.uid in get(/databases/$(database)/documents/chats/$(threadId)).data.participants;
+        allow create: if isAuth()
+                      && request.auth.uid in get(/databases/$(database)/documents/chats/$(threadId)).data.participants
+                      && request.resource.data.senderId == request.auth.uid;
+      }
+    }
+
+    // ── Health Records (top-level collections) ──
+    // Patient can read their own. Doctor who created it can read/write.
+    match /prescriptions/{id} {
+      allow read: if isAuth()
+                  && (resource.data.patientId == request.auth.uid
+                      || resource.data.doctorId == request.auth.uid);
+      allow create: if isAuth() && isDoctor();
+    }
+
+    match /labs/{id} {
+      allow read: if isAuth()
+                  && (resource.data.patientId == request.auth.uid
+                      || resource.data.doctorId == request.auth.uid);
+      allow create: if isAuth() && isDoctor();
+    }
+
+    match /visits/{id} {
+      allow read: if isAuth()
+                  && (resource.data.patientId == request.auth.uid
+                      || resource.data.doctorId == request.auth.uid);
+      allow create: if isAuth() && isDoctor();
     }
   }
 }
