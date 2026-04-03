@@ -4,7 +4,13 @@ import { useAppStore } from "@/store";
 import { useState, useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { db } from "@/services/firebase/config";
-import { doc, writeBatch, collection, onSnapshot } from "firebase/firestore";
+import {
+    collection,
+    onSnapshot,
+    query,
+    where
+} from "firebase/firestore";
+import { bookSlot } from "@/services/firebase/appointments";
 
 type Slot = {
     id: string;
@@ -12,167 +18,122 @@ type Slot = {
     isOpen: boolean;
 };
 
-export default function DoctorSchedule() {
+export default function BookAppointment() {
     const { user } = useAppStore();
 
-    const dates = Array.from({ length: 14 }).map((_, i) => addDays(new Date(), i));
+    const dates = Array.from({ length: 7 }).map((_, i) =>
+        addDays(new Date(), i)
+    );
+
     const [selectedDate, setSelectedDate] = useState<Date>(dates[0]);
+    const [selectedDoctor, setSelectedDoctor] = useState<string>("");
 
     const [slots, setSlots] = useState<Slot[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [generating, setGenerating] = useState(false);
+    const [loadingSlots, setLoadingSlots] = useState(false);
 
+    // 🔥 Fetch slots
     useEffect(() => {
-        if (!user || !selectedDate) return;
-        setLoading(true);
-        const dateStr = format(selectedDate, 'yyyy-MM-dd');
-        const slotsRef = collection(db, `doctors/${user.uid}/availability/${dateStr}/slots`);
+        if (!selectedDoctor || !selectedDate) return;
+
+        setLoadingSlots(true);
+
+        const dateStr = format(selectedDate, "yyyy-MM-dd");
+
+        const slotsRef = collection(
+            db,
+            `doctors/${selectedDoctor}/availability/${dateStr}/slots`
+        );
 
         const unsubscribe = onSnapshot(slotsRef, (snap) => {
-            const fetched: Slot[] = snap.docs.map(d => {
-                const data = d.data() as { time?: string; isOpen?: boolean };
+            const fetchedSlots: Slot[] = snap.docs.map((doc) => {
+                const data = doc.data() as {
+                    time?: string;
+                    isOpen?: boolean;
+                };
+
                 return {
-                    id: d.id,
+                    id: doc.id,
                     time: data.time ?? "",
                     isOpen: data.isOpen ?? false
                 };
             });
-            fetched.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
-            setSlots(fetched);
-            setLoading(false);
+
+            // ✅ SAFE SORT
+            fetchedSlots.sort(
+                (a, b) =>
+                    new Date(a.time).getTime() -
+                    new Date(b.time).getTime()
+            );
+
+            setSlots(fetchedSlots);
+            setLoadingSlots(false);
         });
 
         return () => unsubscribe();
-    }, [user, selectedDate]);
+    }, [selectedDoctor, selectedDate]);
 
-    const convertTo24 = (time: string, dateObj: Date) => {
-        // time e.g "09:00 AM"
-        const [hm, ampm] = time.split(' ');
-        const [h, m] = hm.split(':');
-        let hr = parseInt(h);
-        if (ampm === 'PM' && hr !== 12) hr += 12;
-        if (ampm === 'AM' && hr === 12) hr = 0;
-
-        const d = new Date(dateObj);
-        d.setHours(hr, parseInt(m), 0, 0);
-        return d.toISOString();
-    };
-
-    const generateDefaultSlots = async () => {
-        if (!user) return;
-        setGenerating(true);
-        const times = [
-            "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM",
-            "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM",
-            "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM"
-        ];
+    // 🔥 Handle booking
+    const handleBook = async (slot: Slot) => {
+        if (!user || !selectedDoctor) return;
 
         try {
-            const batch = writeBatch(db);
-            const dateStr = format(selectedDate, 'yyyy-MM-dd');
-
-            times.forEach(t => {
-                const isoTime = convertTo24(t, selectedDate);
-                const slotId = isoTime.replace(/[:.]/g, '-');
-                const slotRef = doc(db, `doctors/${user.uid}/availability/${dateStr}/slots`, slotId);
-                batch.set(slotRef, {
-                    time: isoTime,
-                    isOpen: true
-                });
-            });
-
-            await batch.commit();
+            await bookSlot(selectedDoctor, slot.id);
+            alert("Appointment booked!");
         } catch (e) {
             console.error(e);
-        } finally {
-            setGenerating(false);
-        }
-    };
-
-    const toggleSlot = async (slotId: string, currentOpen: boolean) => {
-        if (!user) return;
-        try {
-            const dateStr = format(selectedDate, 'yyyy-MM-dd');
-            const batch = writeBatch(db); // use batch or single doc update
-            const slotRef = doc(db, `doctors/${user.uid}/availability/${dateStr}/slots`, slotId);
-            batch.update(slotRef, { isOpen: !currentOpen });
-            await batch.commit();
-        } catch (e) {
-            console.error("Failed to toggle slot:", e);
+            alert("Booking failed");
         }
     };
 
     if (!user) return null;
 
     return (
-        <div className="flex-1 max-w-4xl mx-auto w-full space-y-10">
-            <header className="mb-8">
-                <h1 className="font-headline text-2xl font-extrabold tracking-tight text-on-surface">Schedule Management</h1>
-                <p className="text-on-surface-variant">Configure your availability for patient appointments.</p>
-            </header>
+        <div className="max-w-4xl mx-auto w-full space-y-8">
 
-            {/* Date Strip */}
-            <section className="space-y-4">
-                <h2 className="font-headline text-lg font-bold px-1">Select Date to Configure</h2>
-                <div className="bg-surface-container-low rounded-xl p-2 flex gap-2 overflow-x-auto no-scrollbar">
-                    {dates.map((date, idx) => {
-                        const isSelected = format(selectedDate, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd');
-                        return (
-                            <button
-                                key={idx}
-                                onClick={() => setSelectedDate(date)}
-                                className={`flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg transition-colors ${isSelected ? 'bg-surface-container-lowest shadow-sm border-b-4 border-secondary text-secondary' : 'hover:bg-surface-container-high'
-                                    }`}>
-                                <span className={`text-[10px] font-bold uppercase tracking-widest ${isSelected ? 'text-outline' : 'text-outline'}`}>{format(date, 'EEE')}</span>
-                                <span className={`font-headline text-xl font-bold ${isSelected ? 'text-secondary' : 'text-on-surface'}`}>{format(date, 'dd')}</span>
-                                <span className={`text-[10px] font-bold ${isSelected ? 'text-secondary' : 'text-outline'}`}>{format(date, 'MMM')}</span>
-                            </button>
-                        )
-                    })}
-                </div>
-            </section>
+            {/* Doctor Select (TEMP SIMPLE) */}
+            <div>
+                <input
+                    placeholder="Enter Doctor ID"
+                    value={selectedDoctor}
+                    onChange={(e) => setSelectedDoctor(e.target.value)}
+                    className="border p-2 rounded"
+                />
+            </div>
 
-            <section className="bg-surface-container-lowest p-8 rounded-2xl shadow-sm border border-outline-variant/10">
-                <div className="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 className="font-headline text-lg font-bold">Time Slots for {format(selectedDate, 'MMM dd, yyyy')}</h2>
-                        <p className="text-sm text-outline">Active slots will be visible to patients during booking.</p>
-                    </div>
-                    <button disabled={generating} onClick={generateDefaultSlots} className="bg-secondary text-on-secondary px-4 py-2 flex items-center gap-2 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50">
-                        <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
-                        Auto Generate Shift
+            {/* Date Selector */}
+            <div className="flex gap-2 overflow-x-auto">
+                {dates.map((date, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => setSelectedDate(date)}
+                        className="px-3 py-2 border rounded"
+                    >
+                        {format(date, "dd MMM")}
                     </button>
-                </div>
+                ))}
+            </div>
 
-                {loading ? (
-                    <div className="animate-pulse space-y-4">
-                        <div className="h-10 bg-surface-container-low rounded-xl"></div>
-                        <div className="h-10 bg-surface-container-low rounded-xl"></div>
-                    </div>
-                ) : slots.length === 0 ? (
-                    <div className="text-center py-10 bg-surface-container-low rounded-xl border border-dashed border-outline-variant/30">
-                        <span className="material-symbols-outlined text-4xl text-outline mb-2">event_busy</span>
-                        <p className="font-bold">No slots configured for this date.</p>
-                        <p className="text-sm text-outline mt-1">Click 'Auto Generate Shift' to load standard availability.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {slots.map(slot => (
-                            <button
-                                key={slot.id}
-                                onClick={() => toggleSlot(slot.id, slot.isOpen)}
-                                className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${slot.isOpen
-                                    ? 'bg-primary-fixed/20 border-primary cursor-pointer text-on-surface hover:bg-primary-fixed/30'
-                                    : 'bg-surface-container-high border-transparent text-outline cursor-pointer opacity-70 hover:opacity-100'
-                                    }`}
-                            >
-                                <span className="font-bold">{slot.time && format(new Date(slot.time), 'hh:mm a')}</span>
-                                <span className="text-[10px] uppercase font-bold mt-1 tracking-wider">{slot.isOpen ? 'Active' : 'Disabled'}</span>
-                            </button>
-                        ))}
-                    </div>
-                )}
-            </section>
+            {/* Slots */}
+            {loadingSlots ? (
+                <p>Loading slots...</p>
+            ) : (
+                <div className="grid grid-cols-3 gap-3">
+                    {slots.map((slot) => (
+                        <button
+                            key={slot.id}
+                            disabled={!slot.isOpen}
+                            onClick={() => handleBook(slot)}
+                            className={`p-3 rounded border ${slot.isOpen
+                                    ? "bg-green-100"
+                                    : "bg-gray-200 cursor-not-allowed"
+                                }`}
+                        >
+                            {slot.time &&
+                                format(new Date(slot.time), "hh:mm a")}
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
