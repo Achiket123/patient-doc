@@ -8,6 +8,12 @@ import { useRouter } from "next/navigation";
 import { format, addDays } from "date-fns";
 import Link from "next/link";
 
+type Slot = {
+    id: string;
+    time: string;
+    isOpen: boolean;
+};
+
 export default function BookAppointment() {
     const { user } = useAppStore();
     const router = useRouter();
@@ -21,7 +27,7 @@ export default function BookAppointment() {
     const dates = Array.from({ length: 6 }).map((_, i) => addDays(new Date(), i));
     const [selectedDate, setSelectedDate] = useState<Date>(dates[0]);
 
-    const [slots, setSlots] = useState<any[]>([]);
+    const [slots, setSlots] = useState<Slot[]>([]);
     const [loadingSlots, setLoadingSlots] = useState(false);
     const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
 
@@ -56,7 +62,14 @@ export default function BookAppointment() {
         const slotsRef = collection(db, `doctors/${selectedDoctorId}/availability/${dateStr}/slots`);
 
         const unsubscribe = onSnapshot(slotsRef, (snap) => {
-            const fetchedSlots = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const fetchedSlots: Slot[] = snap.docs.map(doc => {
+                const data = doc.data() as { time?: string; isOpen?: boolean };
+                return {
+                    id: doc.id,
+                    time: data.time ?? "",
+                    isOpen: data.isOpen ?? false
+                };
+            });
             // Sort by time
             fetchedSlots.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
             setSlots(fetchedSlots);
@@ -216,7 +229,7 @@ export default function BookAppointment() {
                                 if (!slot.isOpen) {
                                     return (
                                         <div key={slot.id} className="h-12 flex items-center justify-center rounded-lg bg-surface-container-high text-outline font-medium line-through cursor-not-allowed">
-                                            {format(new Date(slot.time), 'hh:mm a')}
+                                            {slot.time && format(new Date(slot.time), 'hh:mm a')}
                                         </div>
                                     )
                                 }
@@ -224,7 +237,7 @@ export default function BookAppointment() {
                                     <label key={slot.id} className="cursor-pointer" onClick={() => setSelectedSlotId(slot.id)}>
                                         <input type="radio" name="time" className="peer sr-only" checked={isSelected} onChange={() => { }} />
                                         <div className="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
-                                            {format(new Date(slot.time), 'hh:mm a')}
+                                            {slot.time && format(new Date(slot.time), 'hh:mm a')}
                                         </div>
                                     </label>
                                 )
@@ -257,7 +270,7 @@ export default function BookAppointment() {
                     <div className="max-w-[1440px] px-6 py-2 md:px-10 lg:px-40 mx-auto flex items-center justify-between gap-6">
                         <div className="hidden sm:block">
                             <p className="text-xs font-bold text-outline uppercase tracking-widest">Summary</p>
-                            <p className="font-headline font-bold text-on-surface">Dr. {selectedDoctor?.name || 'Doctor'} • {selectedDate && format(selectedDate, 'MMM dd')}, {selectedSlot && format(new Date(selectedSlot.time), 'hh:mm a')}</p>
+                            <p className="font-headline font-bold text-on-surface">Dr. {selectedDoctor?.name || 'Doctor'} • {selectedDate && format(selectedDate, 'MMM dd')}, {selectedSlot && selectedSlot.time && format(new Date(selectedSlot.time), 'hh:mm a')}</p>
                         </div>
                         <button
                             disabled={bookingStatus === 'loading'}

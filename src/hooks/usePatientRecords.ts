@@ -45,7 +45,7 @@ export const usePatientRecords = (patientId: string | undefined) => {
                             id: change.doc.id,
                             ...change.doc.data(),
                             type: colName.replace(/s$/, '') as any
-                        };
+                        } as RecordItem;
                     }
                 });
 

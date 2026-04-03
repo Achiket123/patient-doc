@@ -77,7 +77,14 @@ export default function BookAppointment() {
         if (!user || !selectedDoctor) return;
 
         try {
-            await bookSlot(selectedDoctor, slot.id);
+            await bookSlot(
+                selectedDoctor,
+                user.uid,
+                slot.id,
+                slot.time,
+                "General Checkup",
+                ""
+            );
             alert("Appointment booked!");
         } catch (e) {
             console.error(e);
@@ -124,8 +131,8 @@ export default function BookAppointment() {
                             disabled={!slot.isOpen}
                             onClick={() => handleBook(slot)}
                             className={`p-3 rounded border ${slot.isOpen
-                                    ? "bg-green-100"
-                                    : "bg-gray-200 cursor-not-allowed"
+                                ? "bg-green-100"
+                                : "bg-gray-200 cursor-not-allowed"
                                 }`}
                         >
                             {slot.time &&
