@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { db } from '../services/firebase/config';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, limit } from 'firebase/firestore';
 
 export interface RecordItem {
     id: string;
@@ -13,6 +13,8 @@ export interface RecordItem {
     createdAt: string;
 }
 
+const PAGE_SIZE = 10;
+
 export const usePatientRecords = (patientId: string | undefined) => {
     const [records, setRecords] = useState<RecordItem[]>([]);
     const [loading, setLoading] = useState(true);
@@ -23,42 +25,43 @@ export const usePatientRecords = (patientId: string | undefined) => {
             return;
         }
 
-        // Since hybrid collections are used, we fetch from prescriptions, labs, etc
-        // For MVP scope and unified "Activity Feed", we can fetch prescriptions 
-        const unsubscibes: (() => void)[] = [];
         let _recordsMap: Record<string, RecordItem> = {};
-
+        const unsubscribes: (() => void)[] = [];
         const collectionsToFetch = ['prescriptions', 'labs', 'visits'];
 
         collectionsToFetch.forEach(colName => {
-            const q = query(collection(db, colName), where('patientId', '==', patientId));
-            const sub = onSnapshot(q, (snapshot) => {
-                let changed = false;
-                snapshot.docs.forEach(doc => {
-                    _recordsMap[doc.id] = { id: doc.id, ...doc.data(), type: colName.replace(/s$/, '') } as any;
-                    changed = true;
-                });
+            const q = query(
+                collection(db, colName),
+                where('patientId', '==', patientId),
+                limit(PAGE_SIZE)
+            );
 
-                // Remove deleted
+            const sub = onSnapshot(q, (snapshot) => {
                 snapshot.docChanges().forEach(change => {
                     if (change.type === 'removed') {
                         delete _recordsMap[change.doc.id];
-                        changed = true;
+                    } else {
+                        _recordsMap[change.doc.id] = {
+                            id: change.doc.id,
+                            ...change.doc.data(),
+                            type: colName.replace(/s$/, '') as any
+                        };
                     }
                 });
 
-                if (changed) {
-                    setRecords(Object.values(_recordsMap).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
-                }
+                const sorted = Object.values(_recordsMap).sort(
+                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setRecords(sorted);
+            }, (err) => {
+                console.error(`[usePatientRecords] ${colName}:`, err);
             });
-            unsubscibes.push(sub);
+
+            unsubscribes.push(sub);
         });
 
         setLoading(false);
-
-        return () => {
-            unsubscibes.forEach(unsub => unsub());
-        };
+        return () => unsubscribes.forEach(u => u());
     }, [patientId]);
 
     return { records, loading };

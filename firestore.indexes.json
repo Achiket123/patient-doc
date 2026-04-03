@@ -5,15 +5,25 @@
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "patientId",
+                    "fieldPath": "doctorId",
                     "order": "ASCENDING"
                 },
                 {
                     "fieldPath": "status",
                     "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "appointments",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "patientId",
+                    "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "slot.time",
+                    "fieldPath": "status",
                     "order": "ASCENDING"
                 }
             ]
@@ -27,8 +37,36 @@
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "slot.time",
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "appointments",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "patientId",
                     "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "chats",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "participants",
+                    "arrayConfig": "CONTAINS"
+                },
+                {
+                    "fieldPath": "updatedAt",
+                    "order": "DESCENDING"
                 }
             ]
         },
@@ -37,11 +75,53 @@
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "participants",
-                    "arrayConfig": "CONTAINS"
+                    "fieldPath": "chatId",
+                    "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "lastAt",
+                    "fieldPath": "timestamp",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "prescriptions",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "patientId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "labs",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "patientId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "visits",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "patientId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
                     "order": "DESCENDING"
                 }
             ]

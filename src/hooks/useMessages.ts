@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { db } from '../services/firebase/config';
-import { collection, query, where, onSnapshot, orderBy, doc, getDocs, addDoc, updateDoc } from 'firebase/firestore';
+import {
+    collection, query, where, onSnapshot, orderBy,
+    limit, limitToLast, endBefore, startAfter, doc, getDocs, addDoc, updateDoc
+} from 'firebase/firestore';
 
 export interface ChatThread {
     id: string;
-    participants: string[]; // [uid1, uid2]
+    participants: string[];
     lastMessage: string;
-    updatedAt: string; // ISO string
+    updatedAt: string;
 }
 
 export interface ChatMessage {
@@ -16,30 +19,27 @@ export interface ChatMessage {
     timestamp: string;
 }
 
+const PAGE_SIZE = 20;
+
 export const useChatThreads = (userId: string | undefined) => {
     const [threads, setThreads] = useState<ChatThread[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!userId) {
-            setLoading(false);
-            return;
-        }
+        if (!userId) { setLoading(false); return; }
 
         const q = query(
             collection(db, 'chats'),
             where('participants', 'array-contains', userId)
-            // Ordering by updatedAt requires composite index: participants + updatedAt DESC
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const results: ChatThread[] = [];
-            snapshot.forEach(doc => {
-                results.push({ id: doc.id, ...doc.data() } as ChatThread);
-            });
+            const results: ChatThread[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ChatThread));
             results.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-
             setThreads(results);
+            setLoading(false);
+        }, (err) => {
+            console.error('[useChatThreads]', err);
             setLoading(false);
         });
 
@@ -52,66 +52,68 @@ export const useChatThreads = (userId: string | undefined) => {
 export const useChatMessages = (chatId: string | null) => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(false);
+    const [oldestDoc, setOldestDoc] = useState<any>(null);
 
     useEffect(() => {
-        if (!chatId) {
-            setMessages([]);
-            setLoading(false);
-            return;
-        }
+        if (!chatId) { setMessages([]); setLoading(false); return; }
 
         setLoading(true);
+        setOldestDoc(null);
+
+        // Real-time listener for the latest PAGE_SIZE messages
         const q = query(
-            collection(db, `chats/${chatId}/messages`)
+            collection(db, `chats/${chatId}/messages`),
+            orderBy('timestamp', 'asc'),
+            limitToLast(PAGE_SIZE)
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const results: ChatMessage[] = [];
-            snapshot.forEach(doc => {
-                results.push({ id: doc.id, ...doc.data() } as ChatMessage);
-            });
-            // Sort in client
-            results.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-
+            const results: ChatMessage[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ChatMessage));
             setMessages(results);
+            setHasMore(snapshot.docs.length === PAGE_SIZE);
+            if (snapshot.docs.length > 0) setOldestDoc(snapshot.docs[0]);
+            setLoading(false);
+        }, (err) => {
+            console.error('[useChatMessages]', err);
             setLoading(false);
         });
 
         return () => unsubscribe();
     }, [chatId]);
 
+    // Load older messages — paginate backwards
+    const loadMore = async () => {
+        if (!chatId || !oldestDoc) return;
+        const q = query(
+            collection(db, `chats/${chatId}/messages`),
+            orderBy('timestamp', 'asc'),
+            endBefore(oldestDoc),
+            limitToLast(PAGE_SIZE)
+        );
+        const snapshot = await getDocs(q);
+        const older = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ChatMessage));
+        setMessages(prev => [...older, ...prev]);
+        setHasMore(snapshot.docs.length === PAGE_SIZE);
+        if (snapshot.docs.length > 0) setOldestDoc(snapshot.docs[0]);
+    };
+
     const sendMessage = async (senderId: string, content: string) => {
         if (!chatId) return;
 
-        // Optimistic UI updates
-        const tempId = Date.now().toString();
-        const newMsg: ChatMessage = {
-            id: tempId,
-            senderId,
-            content,
-            timestamp: new Date().toISOString()
-        };
-
-        setMessages(prev => [...prev, newMsg]);
+        // Optimistic UI — insert immediately, rollback on failure
+        const tempId = `temp_${Date.now()}`;
+        const now = new Date().toISOString();
+        setMessages(prev => [...prev, { id: tempId, senderId, content, timestamp: now }]);
 
         try {
-            const msgsRef = collection(db, `chats/${chatId}/messages`);
-            await addDoc(msgsRef, {
-                senderId,
-                content,
-                timestamp: new Date().toISOString()
-            });
-
-            const chatRef = doc(db, 'chats', chatId);
-            await updateDoc(chatRef, {
-                lastMessage: content,
-                updatedAt: new Date().toISOString()
-            });
+            await addDoc(collection(db, `chats/${chatId}/messages`), { senderId, content, timestamp: now });
+            await updateDoc(doc(db, 'chats', chatId), { lastMessage: content, updatedAt: now });
         } catch (e) {
-            console.error(e);
-            // rollback could be applied here
+            console.error('[sendMessage] failed:', e);
+            setMessages(prev => prev.filter(m => m.id !== tempId)); // rollback
         }
     };
 
-    return { messages, loading, sendMessage };
+    return { messages, loading, hasMore, loadMore, sendMessage };
 };

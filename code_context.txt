@@ -1,0 +1,2359 @@
+# Code Context Analysis
+
+Generated: 2026-04-03T16:39:45+05:30
+Files Scanned: 20
+Analysis Tools: regex, gosec, eslint, flawfinder
+
+## Security Summary
+
+**Total Issues: 0**
+
+- 🔴 CRITICAL: 0
+- 🟠 HIGH: 0
+- 🟡 MEDIUM: 0
+- 🟢 LOW: 0
+
+**Issues by Tool:**
+
+---
+
+## File: design/messages.html
+Language: html | Tokens: 5720 | Size: 22882 bytes
+
+```html
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Sanctuary | Medical Messaging</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#c8bfff",
+                    "primary": "#006565",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#93f2f2",
+                    "surface-bright": "#f7fafa",
+                    "on-background": "#181c1d",
+                    "on-surface-variant": "#3e4949",
+                    "on-secondary-fixed": "#190064",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#76d6d5",
+                    "primary-container": "#008080",
+                    "error": "#ba1a1a",
+                    "secondary": "#5d4cbf",
+                    "tertiary-fixed-dim": "#ffb692",
+                    "secondary-container": "#9888ff",
+                    "tertiary-fixed": "#ffdbcb",
+                    "background": "#f7fafa",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#76d6d5",
+                    "secondary-fixed": "#e5deff",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#8b4823",
+                    "outline-variant": "#bdc9c8",
+                    "on-primary-fixed-variant": "#004f4f",
+                    "on-tertiary-container": "#fff9f7",
+                    "outline": "#6e7979",
+                    "surface-variant": "#e0e3e3",
+                    "surface-tint": "#006a6a",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2d3131",
+                    "surface-container-highest": "#e0e3e3",
+                    "on-primary-fixed": "#002020",
+                    "on-tertiary-fixed": "#341100",
+                    "surface-container-low": "#f1f4f4",
+                    "tertiary-container": "#a96039",
+                    "surface-container-high": "#e6e9e9",
+                    "inverse-on-surface": "#eef1f1",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d7dbdb",
+                    "on-surface": "#181c1d",
+                    "on-tertiary-fixed-variant": "#733512",
+                    "on-primary-container": "#e3fffe",
+                    "on-secondary-fixed-variant": "#4532a6",
+                    "surface": "#f7fafa",
+                    "surface-container": "#ebeeee",
+                    "on-secondary-container": "#2e1390"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bdc9c8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar Navigation (Minimalistic Back Button and Status) -->
+<aside class="w-20 bg-surface-container-low flex flex-col items-center py-8 border-r border-outline-variant/10">
+<div class="mb-12">
+<div class="p-3 rounded-xl bg-primary text-on-primary">
+<span class="material-symbols-outlined">health_metrics</span>
+</div>
+</div>
+<nav class="flex flex-col gap-8 flex-1">
+<button class="p-3 text-primary hover:bg-surface-container-highest rounded-xl transition-colors">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="p-3 bg-primary-fixed text-on-primary-fixed-variant rounded-xl transition-colors shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+</button>
+<button class="p-3 text-outline hover:bg-surface-container-highest rounded-xl transition-colors">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+<button class="p-3 text-outline hover:bg-surface-container-highest rounded-xl transition-colors">
+<span class="material-symbols-outlined">folder_shared</span>
+</button>
+</nav>
+<div class="mt-auto">
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed overflow-hidden">
+<img alt="Doctor Profile" class="w-full h-full object-cover" data-alt="close up professional portrait of a female doctor with a kind expression in a bright medical setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7_adf8s6w0J6QZpp-8co_ysBV2y10n2tPlTWPdbrVSNiftQq0qhBMIHmVs6qZoQPW2uPqT-YuYONvQ-I1nq-cusM1_VJU6I77WFPLfbW3Ys-dsd6GujRUUb0BdFavpxuQPowzYWx_B79prAe8x9_nMNOg9iPL7xQMzen34LLE5pn1XEN3g6Uja4wnr844GpbOKpuPoTT3kk_kkunQClq7ySDeXrZI2bcVV1kEpMl3HOj4NKeXsATDGFpUTcg9GZWYkGZe1K9mwIA"/>
+</div>
+</div>
+</aside>
+<!-- Thread List -->
+<section class="w-80 bg-surface-container flex flex-col">
+<div class="p-6">
+<h1 class="font-headline text-2xl font-extrabold text-on-surface mb-6">Messages</h1>
+<div class="relative">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-sm">search</span>
+</div>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-outline/60" placeholder="Search patients..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar px-3 flex flex-col gap-1">
+<!-- Active Thread -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-4 cursor-pointer">
+<div class="relative shrink-0">
+<img alt="Patient John" class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="portrait of a middle-aged man with short dark hair and a friendly smile wearing a casual shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWrtptve7qhVkqaxpITvrEpziDj6DfKBFLbyY9yk8El5P5ieQZlB97VokQ3YL8nGk6CgsmqzEyUH114Vqvr-A0D46Jmftf80vpHaPR4caXWVhJyGoK3yuW_OhyYB9U6iXXFSXS2piiHolQHytq06n5yiZA56voFmvVo8WIEArsv-dy9jfk-DUE5OhHV6CjJMVh-3qF7aFveUeADsVQWFwk7iFtYGMLRN3r-LV3Gn1DrF9r8AvA5Hfxqjo5hiMbBbzahEsLAHzKz4U"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-surface-container-lowest rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline font-bold text-on-surface truncate">John Doe</h3>
+<span class="text-[10px] font-label font-semibold text-primary uppercase tracking-wider">Just now</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-1">I've been feeling a bit dizzy today and my pulse seems higher...</p>
+</div>
+<div class="w-2.5 h-2.5 bg-primary rounded-full mt-2"></div>
+</div>
+<!-- Thread 2 -->
+<div class="p-4 rounded-xl hover:bg-surface-container-high transition-colors flex items-start gap-4 cursor-pointer">
+<img alt="Patient Sarah" class="w-12 h-12 rounded-full object-cover" data-alt="close up of a young woman with long brown hair and gentle eyes in natural daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZl7TyEP51eCr_k3ghgBuauIUDsNJ38tmdQPJ2O9M_G-7p1Awz-ighAQ3M9z7FzloqnNmRApXeMU4nDHB-K5kVSHRDUOQ3qNgjr-G1BxrBbzCYxuc-mnSi8RzL4lLL_WUNZsldva_yb6LIwsV0tQo293dpLBFq95J8RTmGHFvpUgGOC6R6t-oZDnV5SPqVd7f5dfeL-u_4kRYia_zYuUnlBSLr_E2az5vkMTQg-s7igasdU4Ph09eUDTJeafl6BwcsmXW5bEP_AOI"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline font-semibold text-on-surface truncate">Sarah Wilson</h3>
+<span class="text-[10px] font-label font-medium text-outline uppercase">10:45 AM</span>
+</div>
+<p class="text-xs text-outline line-clamp-1">The prescription is working well, thank you doctor!</p>
+</div>
+</div>
+<!-- Thread 3 -->
+<div class="p-4 rounded-xl hover:bg-surface-container-high transition-colors flex items-start gap-4 cursor-pointer">
+<img alt="Patient Robert" class="w-12 h-12 rounded-full object-cover" data-alt="portrait of an elderly man with glasses and grey hair smiling warmly in a home setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkeqJMmWkZJFWY1UbGTBVaX4XtrCZm7GdC91YGB7whxM5kVYAhuyjQhN21TGmjYxvhH554MZyF9W4jchFcJ5xwaoGtR4WJ1Xp0ZaqWYa3knv740v7lQamEjrETkUPCbDUwIkGS3XxTArIkCuOxFj87cUnCKUp2lIL-3q8K8xe-uLcHvCOksXopUpw1rmxEoF8cBSachRekXYlMCwrpsZfiqZRRDgg935QuDMuBTHeqU__M0KLmCgQ4LPi93gi9qtfN0o5tTyMFv7E"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline font-semibold text-on-surface truncate">Robert Fox</h3>
+<span class="text-[10px] font-label font-medium text-outline uppercase">Yesterday</span>
+</div>
+<p class="text-xs text-outline line-clamp-1">Can we reschedule the follow-up to Friday?</p>
+</div>
+</div>
+<!-- Thread 4 -->
+<div class="p-4 rounded-xl hover:bg-surface-container-high transition-colors flex items-start gap-4 cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-headline font-bold">EM</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-headline font-semibold text-on-surface truncate">Elena Martinez</h3>
+<span class="text-[10px] font-label font-medium text-outline uppercase">Oct 12</span>
+</div>
+<p class="text-xs text-outline line-clamp-1">Attached the lab results for the blood test.</p>
+</div>
+<span class="material-symbols-outlined text-outline text-sm mt-1">attach_file</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low mt-auto">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-secondary text-on-secondary rounded-xl font-headline font-bold text-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg">add</span>
+                    New Consultation
+                </button>
+</div>
+</section>
+<!-- Main Chat Area -->
+<main class="flex-1 flex flex-col bg-surface">
+<!-- Chat Header -->
+<header class="h-20 bg-surface/70 backdrop-blur-md border-b border-outline-variant/10 px-8 flex items-center justify-between sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="John Doe" class="w-10 h-10 rounded-full object-cover" data-alt="portrait of a middle-aged man with short dark hair and a friendly smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbR_mfvhOQFU17dYIw78ga_swUvNG31OJ-nuF5aehOeOxS_zn-s3huWd9kcJMTgM_kWieIWCXAFbD0rmcRcOirWF0UloRuu_YMRRTXA6wO2sjNCnEACRQJym41IxSQ9KsBbO8MsbZOBcHKPqIajgX9NXOLSeqz7VhaibxH033bvRIiWl5tyYGlrYdu33W541qoZNMtF5wxEf_nPW7BILFzclowf3syHFI8LdAsOtnrZX5CZ8fXnenhoP784lCCyOyZw5li6zMptY0"/>
+<div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-surface rounded-full"></div>
+</div>
+<div>
+<h2 class="font-headline text-lg font-extrabold text-on-surface leading-tight">John Doe</h2>
+<div class="flex items-center gap-1.5">
+<p class="text-xs text-primary font-medium">Active Now</p>
+<span class="w-1 h-1 rounded-full bg-outline/30"></span>
+<p class="text-[10px] font-label text-outline uppercase tracking-tight">Patient ID: #MED-8821</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2.5 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="Voice Call">
+<span class="material-symbols-outlined">call</span>
+</button>
+<button class="p-2.5 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="Video Call">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<button class="p-2.5 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="View Records">
+<span class="material-symbols-outlined">assignment_ind</span>
+</button>
+<div class="w-px h-6 bg-outline-variant/20 mx-1"></div>
+<button class="p-2.5 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Chat Content -->
+<div class="flex-1 overflow-y-auto p-8 flex flex-col gap-6 custom-scrollbar">
+<!-- Date Separator -->
+<div class="flex items-center gap-4 my-2">
+<div class="flex-1 h-px bg-outline-variant/10"></div>
+<span class="text-[10px] font-label font-bold text-outline/60 uppercase tracking-widest">October 14, 2023</span>
+<div class="flex-1 h-px bg-outline-variant/10"></div>
+</div>
+<!-- Doctor Message -->
+<div class="flex items-end gap-3 self-start max-w-[75%]">
+<img alt="Dr. Smith" class="w-8 h-8 rounded-full object-cover shrink-0" data-alt="close up of a professional female doctor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb_Rp_ju5keYioGlMWNmpefiwQe645zkeB7kH0TStnM4rIioQJR6cob6FVJ89uJsH7ULLcx0aCVukjNsk9KPLd2k0-KI24GAjkTh-ADcecc8c488mKilnj53AJDKE2hnIuwgAquQ0NA7I9LN6ziDi6iBGlJjafN3Padc3GqXOA9j9pRJgm_0rl5M4S5OqlcWgRog4iZYkBOQBoOndKJIDZUSfhtAq-jKI-x6xCSyNlyX_80sQgkMTjA2BsGOgbomdkFG0BVHi4ZZY"/>
+<div class="flex flex-col gap-1.5 items-start">
+<div class="px-4 py-3 bg-surface-container-high text-on-surface rounded-xl rounded-bl-none shadow-sm text-sm leading-relaxed">
+                            Hello John, I've reviewed your recent blood pressure logs. How have you been feeling since starting the new dosage?
+                        </div>
+<span class="text-[10px] font-label text-outline ml-1 uppercase">09:15 AM</span>
+</div>
+</div>
+<!-- Patient Message -->
+<div class="flex flex-col gap-1.5 items-end self-end max-w-[75%]">
+<div class="px-4 py-3 bg-primary text-on-primary rounded-xl rounded-br-none shadow-[0_4px_12px_rgba(0,101,101,0.15)] text-sm leading-relaxed">
+                        Good morning Dr. Smith, I've been feeling a bit dizzy today. Especially when I stand up quickly. My pulse also seems to be resting around 85 bpm which is higher than usual.
+                    </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xs" style="font-variation-settings: 'FILL' 1;">done_all</span>
+<span class="text-[10px] font-label text-outline uppercase">09:42 AM</span>
+</div>
+</div>
+<!-- Doctor Message -->
+<div class="flex items-end gap-3 self-start max-w-[75%]">
+<div class="w-8 h-8 shrink-0"></div> <!-- Placeholder for avatar to maintain alignment -->
+<div class="flex flex-col gap-1.5 items-start">
+<div class="px-4 py-3 bg-surface-container-high text-on-surface rounded-xl shadow-sm text-sm leading-relaxed">
+                            The dizziness could be an initial adjustment to the medication. Could you please take a reading now and send it over?
+                        </div>
+<span class="text-[10px] font-label text-outline ml-1 uppercase">09:45 AM</span>
+</div>
+</div>
+<!-- Patient Message with Attachment -->
+<div class="flex flex-col gap-1.5 items-end self-end max-w-[75%]">
+<div class="bg-primary-fixed/30 p-3 rounded-xl rounded-br-none flex flex-col gap-3">
+<div class="bg-surface-container-lowest rounded-lg p-2 flex items-center gap-3 border border-primary/10">
+<div class="w-12 h-12 bg-primary-fixed text-on-primary-fixed-variant rounded-md flex items-center justify-center">
+<span class="material-symbols-outlined">image</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-semibold text-on-surface">BP_Monitor_Oct14.jpg</p>
+<p class="text-[10px] text-outline">1.2 MB • Image</p>
+</div>
+<button class="text-primary hover:bg-primary/5 p-1 rounded">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="px-4 py-2 bg-primary text-on-primary rounded-xl rounded-br-none text-sm leading-relaxed">
+                            Just took it. 138/92.
+                        </div>
+</div>
+<span class="text-[10px] font-label text-outline uppercase">09:51 AM</span>
+</div>
+<!-- Typing Indicator (Mock) -->
+<div class="flex items-center gap-2 self-start ml-11">
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 bg-outline-variant rounded-full animate-bounce"></div>
+<div class="w-1.5 h-1.5 bg-outline-variant rounded-full animate-bounce [animation-delay:0.2s]"></div>
+<div class="w-1.5 h-1.5 bg-outline-variant rounded-full animate-bounce [animation-delay:0.4s]"></div>
+</div>
+<span class="text-[10px] font-label font-bold text-outline uppercase tracking-wider">Dr. Smith is typing...</span>
+</div>
+</div>
+<!-- Chat Input -->
+<footer class="p-6 bg-surface/80 backdrop-blur-lg">
+<div class="max-w-4xl mx-auto flex items-end gap-3">
+<div class="flex gap-1 mb-1">
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+</div>
+<div class="flex-1 bg-surface-container-low rounded-2xl flex flex-col p-2 group focus-within:bg-surface-container-lowest focus-within:shadow-[0_0_0_2px_rgba(0,101,101,0.1)] transition-all">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 px-3 resize-none custom-scrollbar max-h-32 placeholder:text-outline/50" placeholder="Type medical note or message..." rows="1"></textarea>
+<div class="flex items-center justify-between px-3 pb-1 pt-2 border-t border-outline-variant/5">
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-1 text-[10px] font-label font-bold text-outline uppercase hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">emergency</span>
+                                    Mark as Urgent
+                                </button>
+<button class="flex items-center gap-1 text-[10px] font-label font-bold text-outline uppercase hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                    Schedule Task
+                                </button>
+</div>
+<button class="bg-primary text-on-primary p-2 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+<p class="text-center text-[10px] text-outline/50 mt-4 font-label uppercase tracking-widest">Secure end-to-end encrypted medical communication</p>
+</footer>
+</main>
+<!-- Context Panel (Right Sidebar - Collapsible) -->
+<aside class="w-72 bg-surface-container-lowest border-l border-outline-variant/10 overflow-y-auto custom-scrollbar hidden xl:flex flex-col">
+<div class="p-6">
+<h3 class="font-headline font-extrabold text-on-surface mb-6">Patient Overview</h3>
+<div class="space-y-6">
+<!-- Vital Summary -->
+<div class="bg-surface-container-low rounded-xl p-4">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[10px] font-label font-bold text-outline uppercase">Latest Vitals</span>
+<span class="text-[10px] font-label font-bold text-primary cursor-pointer hover:underline">Full History</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant font-medium">BP</span>
+<span class="font-headline text-lg font-extrabold text-primary">138/92</span>
+<span class="text-[9px] text-tertiary font-bold">Elevated</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant font-medium">Heart Rate</span>
+<span class="font-headline text-lg font-extrabold text-on-surface">85 bpm</span>
+<span class="text-[9px] text-outline font-bold">Resting</span>
+</div>
+</div>
+</div>
+<!-- Current Medications -->
+<div>
+<p class="text-[10px] font-label font-bold text-outline uppercase mb-3">Active Prescriptions</p>
+<div class="space-y-2">
+<div class="p-3 border border-outline-variant/20 rounded-lg flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-fixed/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm">pill</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Lisinopril 10mg</p>
+<p class="text-[10px] text-outline">1 tab daily • 12 days left</p>
+</div>
+</div>
+<div class="p-3 border border-outline-variant/20 rounded-lg flex items-center gap-3 opacity-60">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-sm">pill</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Metformin 500mg</p>
+<p class="text-[10px] text-outline">Completed Sep 30</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Clinical Notes Toggle -->
+<div class="p-4 bg-secondary-fixed/20 rounded-xl border border-secondary/10">
+<div class="flex items-center gap-2 mb-2 text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-xs font-bold">Doctor's Private Notes</span>
+</div>
+<p class="text-[11px] text-on-secondary-container leading-relaxed italic">
+                            "Patient reports increased orthostatic hypotension symptoms. Monitor closely for next 48 hours."
+                        </p>
+<button class="mt-3 text-[10px] font-label font-bold text-secondary uppercase hover:tracking-wider transition-all">Edit Note</button>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-outline-variant/10">
+<button class="w-full py-3 px-4 border border-outline-variant text-on-surface-variant rounded-xl text-xs font-bold font-headline flex items-center justify-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">share</span>
+                    Export Chat Log
+                </button>
+</div>
+</aside>
+</div>
+</body></html>
+```
+
+## File: design/doctor-dashboard.html
+Language: html | Tokens: 4924 | Size: 19698 bytes
+
+```html
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DoctorPortal - Clinical Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8bfff",
+                        "primary": "#006565",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#93f2f2",
+                        "surface-bright": "#f7fafa",
+                        "on-background": "#181c1d",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#190064",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#76d6d5",
+                        "primary-container": "#008080",
+                        "error": "#ba1a1a",
+                        "secondary": "#5d4cbf",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "secondary-container": "#9888ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "background": "#f7fafa",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#76d6d5",
+                        "secondary-fixed": "#e5deff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#8b4823",
+                        "outline-variant": "#bdc9c8",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-tertiary-container": "#fff9f7",
+                        "outline": "#6e7979",
+                        "surface-variant": "#e0e3e3",
+                        "surface-tint": "#006a6a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2d3131",
+                        "surface-container-highest": "#e0e3e3",
+                        "on-primary-fixed": "#002020",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-container-low": "#f1f4f4",
+                        "tertiary-container": "#a96039",
+                        "surface-container-high": "#e6e9e9",
+                        "inverse-on-surface": "#eef1f1",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d7dbdb",
+                        "on-surface": "#181c1d",
+                        "on-tertiary-fixed-variant": "#733512",
+                        "on-primary-container": "#e3fffe",
+                        "on-secondary-fixed-variant": "#4532a6",
+                        "surface": "#f7fafa",
+                        "surface-container": "#ebeeee",
+                        "on-secondary-container": "#2e1390"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soap-field:focus-within {
+            background-color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(93, 76, 191, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<div class="relative flex min-h-screen w-full flex-col bg-surface overflow-x-hidden">
+<!-- Shared Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-outline-variant/10 px-10 py-3 bg-surface">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 30.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-on-surface text-lg font-headline font-bold leading-tight tracking-tight">DoctorPortal</h2>
+</div>
+<div class="relative min-w-64">
+<div class="flex items-center bg-surface-container-low rounded-xl px-4 py-2 border border-transparent focus-within:border-primary/20">
+<span class="material-symbols-outlined text-primary text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-outline w-full ml-2" placeholder="Search patient ID or name"/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/30">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold leading-none">Dr. Julianne Smith</p>
+<p class="text-xs text-outline leading-none mt-1">General Practitioner</p>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center border border-outline-variant/20" data-alt="professional portrait of a confident female doctor in a white clinical coat smiling warmly" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaDJVn8e54KGpuvb1D7v8rh_2jp1aJQ4ubNv2tcIgAtW8A-3BBwmSbgRxehVdJAR865PmkzvpnrnR0_1vbNZDkEcosFC2ytOEUVZkPJnszp7LokQb7TGBrg23B0gxoobgy6YrEn66EUNu2uBPS5zSZDAVWlktlHIM2_qCsZxnnO1rr_AeWT3JPfhdBhPRTBnxMJMY-OrY9UB2H14AXxz68-savLqhSDc8KAuyEEoJfd-mfHBBUtw2rwtkkEwI2hXpjf4qJYCt4RZI')"></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Patient Queue -->
+<aside class="w-80 flex flex-col bg-surface-container-low border-r border-outline-variant/10">
+<div class="p-6">
+<h3 class="text-xl font-headline font-bold mb-1">Today's Appointments</h3>
+<p class="text-xs text-outline-variant uppercase tracking-widest font-bold">Oct 24, 2023</p>
+</div>
+<div class="flex-1 overflow-y-auto px-4 pb-6 space-y-2">
+<!-- Appointment Card: In Progress -->
+<div class="p-4 bg-surface-container-lowest rounded-xl border border-secondary/20 shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">In Progress</span>
+<span class="text-xs font-semibold text-secondary">09:30 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="profile photo of an elderly gentleman with grey hair and glasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHcXrmO2zjI-UrEJgWJ0R976FLaGQYNBQT0faQURGFY7kD1PpZ2I5w0xEYOucRdOneEo0yycyuQQvyAbBjlKW9nW5GgYToK0jM57xHir7XrPPR2KAVM3jxsFwqNFYmQISls-8xN5EjCrF1rX1-GnqQyXDZqMqQA89OG4sPDETbG7O3hyHHjne2mbbgzTt0CO2oHKRwM715t5RxNYzWkUV10HGrUL82iXibyHKP6t_r97WBIq7pRMUaWq-7N7iTq0Vrl2AuIrkcbFA')"></div>
+<div>
+<h4 class="text-sm font-bold">Arthur Morgan</h4>
+<p class="text-[11px] text-outline">ID: #PT-9921</p>
+</div>
+</div>
+</div>
+<!-- Appointment Card: Waiting -->
+<div class="p-4 bg-surface-container-high/50 hover:bg-surface-container-high rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Waiting</span>
+<span class="text-xs font-semibold text-on-surface-variant">10:15 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="portrait of a young woman with curly brown hair looking neutral" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnGyhIx8DxZ7Nf3kExz7db0FNGENuvaHKDrxGtzyccyU8Ay7xGt43ON1owFkI_PuKJKiISSmcPwaK5QdQ-PsR2qkkRXVy-vtiTur1zDpPbKEcsLeid6RTGfA2CGE8tJd9LPUe7C9d39O5_UucrT3otbWyrQYZoWZrPxR9ivRbkucwNdva8xo7aw1qNFFU8E-gOebtRAh8t_NlbK_u5ngKnbhL-8qN7FBozJxgVqJLro2pkbfQhx0gAxDAar8vpoFttGhOHtzVZjsQ')"></div>
+<div>
+<h4 class="text-sm font-bold">Sadie Adler</h4>
+<p class="text-[11px] text-outline">ID: #PT-8452</p>
+</div>
+</div>
+</div>
+<!-- Appointment Card: Done -->
+<div class="p-4 opacity-60 hover:opacity-100 rounded-xl transition-all grayscale-[0.5]">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-primary-fixed text-on-primary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Done</span>
+<span class="text-xs font-semibold text-outline">08:45 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="portrait of a middle aged man with a short beard and friendly expression" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRoBM-eWJZMFVPQ2vvjGVThsMgMGtCMVIRtvuT7op2dDwcNtPbyIwsUE_yU2BaL3pGE808gw3gxpALEKFzf1znoQYyAbqvmlFiv-8xpOnWaOCJh8xZbHsdKtrTsxCC5TIntwmpWcHV9dHJ8Zz0j-BzZQPUymLsMKGSiqWIhAboyAjTXE_LIb0_PyFY0DGCO_hBxTcNGwscExEMBzMOp9LY1LIxY74OdLdKES2DKw5O2CdYuoquw0mB2xZl2fSyGZ1c96dMlUwfiEo')"></div>
+<div>
+<h4 class="text-sm font-bold">Charles Smith</h4>
+<p class="text-[11px] text-outline">ID: #PT-7731</p>
+</div>
+</div>
+</div>
+<!-- Appointment Card: Waiting -->
+<div class="p-4 bg-surface-container-high/50 hover:bg-surface-container-high rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Waiting</span>
+<span class="text-xs font-semibold text-on-surface-variant">11:00 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="young boy with a bright smile wearing a colorful t-shirt" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAo3AaVysYDrU0km0O6Zsj6QrTpM_j47VVygoK_IOPGsMdkeDvgJS-gRxTxlWcg19oz3Hh1b3XtY5t9Pj5EZBAZhdmd1oiBihBcQowcazCYIkp9ve93kUQgsd6BmnEHRJjGYkvRv5XZid8pT_0Fv_L_EytK3NbMnZpMy5Pr6x2GdFydDRuELrG0juAJ6RU4sgYpJGcpfylgysIHDt1QnqxBELNMfLCZ4ybuttiZ9zeLeiIMc45XlOh8nDiePB_0h49hA_25zl_JhDk')"></div>
+<div>
+<h4 class="text-sm font-bold">Jack Marston</h4>
+<p class="text-[11px] text-outline">ID: #PT-1024</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Panel: Patient Details & SOAP Form -->
+<section class="flex-1 flex flex-col bg-surface">
+<!-- Patient Header -->
+<div class="px-8 py-6 flex justify-between items-end border-b border-outline-variant/5">
+<div class="flex items-end gap-6">
+<div class="size-24 rounded-2xl bg-cover bg-center border-4 border-surface shadow-lg" data-alt="close-up portrait of Arthur Morgan, an elderly man with wisdom in his eyes and warm lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAu4O_k_uHC1v0mo2oAZnxPFjzK10In1-FJkMzI995C9vFB9cfvMxajqSuTqknw3gZqvByAAQ4r4l47wJgA2tv_8UIfGXZ4B-bTCwyTSv7CkNL7fzz9RFxhNWaNwZ0Gep_6_vKZ_eqMV3YkJHhHV9IcHpbk18faye_2-5OhR5KnhZAEJkdQmozKf_vqq8V009WQP_u9Xhq9ebhUi-IX9STTgGIncKGEnfd0cVfL_TNyzHkZzzqIFR4UsTjdW4lea_Omh9HRCf4KQVo')"></div>
+<div class="mb-1">
+<h2 class="text-3xl font-headline font-extrabold leading-none">Arthur Morgan</h2>
+<div class="flex gap-4 mt-2">
+<p class="text-sm text-outline font-medium"><span class="text-on-surface-variant">Age:</span> 64 yrs</p>
+<p class="text-sm text-outline font-medium"><span class="text-on-surface-variant">DOB:</span> June 12, 1959</p>
+<p class="text-sm text-outline font-medium"><span class="text-on-surface-variant">Sex:</span> Male</p>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant text-on-surface-variant font-bold text-sm rounded-xl hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg">history</span>
+                            Past Records
+                        </button>
+<button class="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-secondary to-secondary-container text-on-secondary font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all">
+<span class="material-symbols-outlined text-lg">save</span>
+                            Finalize Encounter
+                        </button>
+</div>
+</div>
+<!-- Vitals Strip -->
+<div class="px-8 py-6">
+<div class="grid grid-cols-5 gap-4">
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-secondary/10 rounded-xl text-secondary">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">Heart Rate</p>
+<p class="text-lg font-headline font-extrabold">72 <span class="text-xs font-normal text-outline">bpm</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4 border-l-4 border-error/30">
+<div class="p-2 bg-error/10 rounded-xl text-error">
+<span class="material-symbols-outlined">blood_pressure</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">BP</p>
+<p class="text-lg font-headline font-extrabold">145/92 <span class="text-xs font-normal text-outline">mmHg</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-primary/10 rounded-xl text-primary">
+<span class="material-symbols-outlined">thermostat</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">Temp</p>
+<p class="text-lg font-headline font-extrabold">98.6 <span class="text-xs font-normal text-outline">°F</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-tertiary/10 rounded-xl text-tertiary">
+<span class="material-symbols-outlined">air</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">SpO2</p>
+<p class="text-lg font-headline font-extrabold">98 <span class="text-xs font-normal text-outline">%</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-secondary/10 rounded-xl text-secondary">
+<span class="material-symbols-outlined">weight</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">Weight</p>
+<p class="text-lg font-headline font-extrabold">184 <span class="text-xs font-normal text-outline">lbs</span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- SOAP Form -->
+<div class="flex-1 overflow-y-auto px-8 pb-8">
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/10 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">edit_note</span>
+<h3 class="text-xl font-headline font-bold">Clinical SOAP Note</h3>
+</div>
+<form class="grid grid-cols-2 gap-8">
+<!-- Subjective -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Subjective
+                                    <span class="material-symbols-outlined text-sm opacity-50">person</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Patient's reported symptoms, chief complaint, and history..."></textarea>
+</div>
+<!-- Objective -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Objective
+                                    <span class="material-symbols-outlined text-sm opacity-50">visibility</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Physical examination findings, vital signs, and laboratory data..."></textarea>
+</div>
+<!-- Assessment -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Assessment
+                                    <span class="material-symbols-outlined text-sm opacity-50">psychology</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Diagnosis, differential diagnosis, and clinical reasoning..."></textarea>
+</div>
+<!-- Plan -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Plan
+                                    <span class="material-symbols-outlined text-sm opacity-50">event_note</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Treatment, prescriptions, referrals, and follow-up instructions..."></textarea>
+</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>
+```
+
+## File: design/book-appointment.html
+Language: html | Tokens: 4545 | Size: 18181 bytes
+
+```html
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book Appointment - Clinical Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8bfff",
+                        "primary": "#006565",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#93f2f2",
+                        "surface-bright": "#f7fafa",
+                        "on-background": "#181c1d",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#190064",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#76d6d5",
+                        "primary-container": "#008080",
+                        "error": "#ba1a1a",
+                        "secondary": "#5d4cbf",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "secondary-container": "#9888ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "background": "#f7fafa",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#76d6d5",
+                        "secondary-fixed": "#e5deff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#8b4823",
+                        "outline-variant": "#bdc9c8",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-tertiary-container": "#fff9f7",
+                        "outline": "#6e7979",
+                        "surface-variant": "#e0e3e3",
+                        "surface-tint": "#006a6a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2d3131",
+                        "surface-container-highest": "#e0e3e3",
+                        "on-primary-fixed": "#002020",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-container-low": "#f1f4f4",
+                        "tertiary-container": "#a96039",
+                        "surface-container-high": "#e6e9e9",
+                        "inverse-on-surface": "#eef1f1",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d7dbdb",
+                        "on-surface": "#181c1d",
+                        "on-tertiary-fixed-variant": "#733512",
+                        "on-primary-container": "#e3fffe",
+                        "on-secondary-fixed-variant": "#4532a6",
+                        "surface": "#f7fafa",
+                        "surface-container": "#ebeeee",
+                        "on-secondary-container": "#2e1390"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .medical-glow {
+            box-shadow: 0 12px 32px -4px rgba(0, 101, 101, 0.08);
+        }
+        .teal-gradient {
+            background: linear-gradient(135deg, #006565 0%, #008080 100%);
+        }
+        ::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bdc9c8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Minimal Header for Focused View -->
+<header class="flex items-center justify-between px-6 py-4 bg-surface/70 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline text-xl font-bold tracking-tight text-on-surface">Book Appointment</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary-fixed">
+<img alt="User profile" data-alt="Portrait of a young man with glasses and professional attire, soft clinical lighting background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDejNwmsiI2aSKuizvG-wYasXr41JHzPZcf41qRP7Otp_gZFdWpVny76mjMPjW_JtyuFKSBjPJAFkxcbd0Yv4rkRVkNIorx2Jl-ijskB31JRhbgWmgc4M9NR6PvQBtbXOrkYavPOjVMtbQ3Ltxp7E86hBFr01a1s905wUiFkxFemIbZTsgDh39wztz9_zQfCxvDXqkU6Cg6O4z0cTLfVrWE3nSXZl0jgjIndSOPT82eCYdlc1nWeL5uXNcVECZy3Ozh6oPdPEN4rvo"/>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-4xl mx-auto w-full px-6 py-8 space-y-10">
+<!-- Specialty Filter -->
+<section class="space-y-4">
+<h2 class="font-headline text-lg font-bold px-1">Select Specialty</h2>
+<div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-primary text-on-primary px-6 transition-all">
+<span class="text-sm font-semibold">All Specialties</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">monitor_heart</span>
+<span class="text-sm font-medium">Cardiology</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">psychiatry</span>
+<span class="text-sm font-medium">Neurology</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">child_care</span>
+<span class="text-sm font-medium">Pediatrics</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">vaccines</span>
+<span class="text-sm font-medium">Dermatology</span>
+</button>
+</div>
+</section>
+<!-- Doctor List -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline text-lg font-bold">Available Doctors</h2>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Doctor Card 1 -->
+<label class="relative group cursor-pointer">
+<input checked="" class="peer sr-only" name="doctor" type="radio"/>
+<div class="p-4 rounded-xl bg-surface-container-lowest medical-glow border-2 border-transparent peer-checked:border-primary transition-all flex items-center gap-4">
+<div class="size-16 rounded-xl overflow-hidden bg-surface-container-high relative">
+<img class="object-cover w-full h-full" data-alt="Professional headshot of a friendly male doctor in a white lab coat with a stethoscope around his neck" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt0sc7n1OGGqj9bVnWTseFimic_r9oXgo6T-LeJ2CnViDhqwDBbK1Ba2KXHliZfLsjsWLFn0qr1r5e5R4t7zKUvo_5bdNCNkFvGkfu6C0rBw9ec6x9obaKnKLUzslByvbBEsvw8WLpEdv3Fyqt1EvclW0Xg0Mw6w1t3ij4owQkjM6uvYe8UJFhOsEnnCpMWrRpNcB0t7rT-KuNigPPuq3WhCqGenD_2DMJnj2EiBpwJMO_-AjMj_7Le_5uG6ad4uxR1y07hKPQ-Ac"/>
+<div class="absolute bottom-1 right-1 size-3 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex-1">
+<h3 class="font-headline font-bold text-on-surface">Dr. Sarah Jenkins</h3>
+<p class="text-xs text-outline font-medium uppercase tracking-wider">Senior Cardiologist</p>
+<div class="flex items-center gap-1 mt-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.9 (120 reviews)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 peer-checked:opacity-100 transition-opacity">check_circle</span>
+</div>
+</label>
+<!-- Doctor Card 2 -->
+<label class="relative group cursor-pointer">
+<input class="peer sr-only" name="doctor" type="radio"/>
+<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container-high border-2 border-transparent peer-checked:border-primary peer-checked:bg-surface-container-lowest peer-checked:medical-glow transition-all flex items-center gap-4">
+<div class="size-16 rounded-xl overflow-hidden bg-surface-container-high relative">
+<img class="object-cover w-full h-full" data-alt="Portrait of a professional female doctor in a clinical setting with a soft smile and warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1zTd6HYsWtwRLhAoyqkGbrd-WgP838iofnv-AR2sBhH85lQVMJ6LSVxbVdRUHsoBu3ET0ldSK4wa4aotT4evHxrsg8sijKycIFhfBfAT6erXYY4sHp3D6ReS2V8GHlZzvKpssbEGJuPBrJfelgQOu4tyqkdx-aQJ2e69Kp3dMPS4iYPXreWSzOFoNZZsyUwFuqAY1zi5-6Holjb2V1g8HiwMzL7mXhOy4YiK5JQJgEMBnUAa6Qa659t6TicYFBFo-VipRIdOYuLc"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline font-bold text-on-surface">Dr. Marcus Thorne</h3>
+<p class="text-xs text-outline font-medium uppercase tracking-wider">Neurologist</p>
+<div class="flex items-center gap-1 mt-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.8 (94 reviews)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 peer-checked:opacity-100 transition-opacity">check_circle</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Date Strip -->
+<section class="space-y-4">
+<h2 class="font-headline text-lg font-bold px-1">Select Date</h2>
+<div class="bg-surface-container-low rounded-xl p-2 flex gap-2 overflow-x-auto no-scrollbar">
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg bg-surface-container-lowest medical-glow border-b-4 border-primary">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Mon</span>
+<span class="font-headline text-xl font-extrabold text-primary">12</span>
+<span class="text-[10px] font-bold text-primary">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Tue</span>
+<span class="font-headline text-xl font-bold text-on-surface">13</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Wed</span>
+<span class="font-headline text-xl font-bold text-on-surface">14</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Thu</span>
+<span class="font-headline text-xl font-bold text-on-surface">15</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Fri</span>
+<span class="font-headline text-xl font-bold text-on-surface">16</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors opacity-50">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Sat</span>
+<span class="font-headline text-xl font-bold text-on-surface">17</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+</div>
+</section>
+<!-- Time Slots -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline text-lg font-bold">Morning Slots</h2>
+<span class="text-xs font-bold text-outline-variant uppercase tracking-widest">GMT +2:00</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<!-- Available -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            09:00 AM
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            09:30 AM
+                        </div>
+</label>
+<!-- Booked -->
+<div class="h-12 flex items-center justify-center rounded-lg bg-surface-container-high text-outline font-medium line-through cursor-not-allowed">
+                        10:00 AM
+                    </div>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            10:30 AM
+                        </div>
+</label>
+</div>
+<div class="flex items-center justify-between px-1 pt-4">
+<h2 class="font-headline text-lg font-bold">Afternoon Slots</h2>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="h-12 flex items-center justify-center rounded-lg bg-surface-container-high text-outline font-medium line-through cursor-not-allowed">
+                        01:00 PM
+                    </div>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            01:30 PM
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            02:00 PM
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            02:30 PM
+                        </div>
+</label>
+</div>
+</section>
+<!-- Reason for Visit -->
+<section class="space-y-4">
+<h2 class="font-headline text-lg font-bold px-1">Reason for Visit</h2>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border-none rounded-xl p-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all" placeholder="Please describe your symptoms or reason for the appointment..." rows="4"></textarea>
+</div>
+<p class="text-xs text-outline px-1">Your information is protected by healthcare privacy standards.</p>
+</section>
+</main>
+<!-- Fixed Footer CTA -->
+<footer class="sticky bottom-0 bg-surface/80 backdrop-blur-lg border-t border-surface-container-high p-6 z-50">
+<div class="max-w-4xl mx-auto flex items-center justify-between gap-6">
+<div class="hidden sm:block">
+<p class="text-xs font-bold text-outline uppercase tracking-widest">Summary</p>
+<p class="font-headline font-bold text-on-surface">Dr. Jenkins • Oct 12, 09:30 AM</p>
+</div>
+<button class="flex-1 sm:flex-none sm:min-w-[240px] h-14 teal-gradient text-on-primary font-headline font-bold text-lg rounded-xl medical-glow hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    Confirm Appointment
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</footer>
+</div>
+</body></html>
+```
+
+## File: design/patient-dashboard.html
+Language: html | Tokens: 3886 | Size: 15544 bytes
+
+```html
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HealthSync Patient Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#c8bfff",
+                      "primary": "#006565",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#93f2f2",
+                      "surface-bright": "#f7fafa",
+                      "on-background": "#181c1d",
+                      "on-surface-variant": "#3e4949",
+                      "on-secondary-fixed": "#190064",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#76d6d5",
+                      "primary-container": "#008080",
+                      "error": "#ba1a1a",
+                      "secondary": "#5d4cbf",
+                      "tertiary-fixed-dim": "#ffb692",
+                      "secondary-container": "#9888ff",
+                      "tertiary-fixed": "#ffdbcb",
+                      "background": "#f7fafa",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#76d6d5",
+                      "secondary-fixed": "#e5deff",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#8b4823",
+                      "outline-variant": "#bdc9c8",
+                      "on-primary-fixed-variant": "#004f4f",
+                      "on-tertiary-container": "#fff9f7",
+                      "outline": "#6e7979",
+                      "surface-variant": "#e0e3e3",
+                      "surface-tint": "#006a6a",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#2d3131",
+                      "surface-container-highest": "#e0e3e3",
+                      "on-primary-fixed": "#002020",
+                      "on-tertiary-fixed": "#341100",
+                      "surface-container-low": "#f1f4f4",
+                      "tertiary-container": "#a96039",
+                      "surface-container-high": "#e6e9e9",
+                      "inverse-on-surface": "#eef1f1",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#d7dbdb",
+                      "on-surface": "#181c1d",
+                      "on-tertiary-fixed-variant": "#733512",
+                      "on-primary-container": "#e3fffe",
+                      "on-secondary-fixed-variant": "#4532a6",
+                      "surface": "#f7fafa",
+                      "surface-container": "#ebeeee",
+                      "on-secondary-container": "#2e1390"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7fafa; color: #181c1d; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header Shared Component -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-outline-variant/20 px-6 py-4 md:px-10 lg:px-40 bg-surface">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-on-background text-xl font-headline font-extrabold leading-tight tracking-[-0.015em]">HealthSync</h2>
+</div>
+<div class="flex gap-3">
+<button class="flex size-10 items-center justify-center rounded-xl bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-xl bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-6 py-8 md:px-10 lg:px-40 max-w-[1440px] mx-auto w-full">
+<!-- Greeting Section -->
+<section class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-4 mb-2">
+<div class="h-16 w-16 rounded-full bg-cover bg-center border-4 border-surface-container-lowest shadow-sm" data-alt="Professional portrait of a middle-aged man with a friendly smile, clean studio lighting, soft blurred background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdDwwfB1qkJ0_w1XvqaskAoTlFN5b-xFRQBJiQ26AyrkkDhU3Da3DFNouXJUh2zahNmurfomLwpTNn8PioSZW6rDRsINcgYIFpx2OhXQicqyverwIn-6XaovgcpSDFpEr3tSfPlUzeSlUgKMTIP8vYPiqrUGap5e_uV2LQRjqUMhxf9p_ui-SNHAIwnaw5eMX8ihcApkMVQCJVm_6m7Ar-kAadP7ucgd-SEBxmP-4I6KJ6pJQcImg52S9D2RbobrxgOt_IPgWuAE0')"></div>
+<div>
+<span class="text-label-sm font-bold tracking-widest text-primary uppercase text-[11px]">Welcome Back</span>
+<h1 class="text-3xl font-headline font-extrabold text-on-background">Hello, Alex Johnson</h1>
+</div>
+</div>
+<p class="text-on-surface-variant text-base">Your health metrics look stable today. You have one upcoming task.</p>
+</div>
+<div class="flex items-center gap-2 bg-primary/5 px-4 py-2 rounded-full">
+<span class="text-primary font-bold text-sm">Member ID: #4421-90</span>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Highlighted Next Appointment Card -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<div class="relative overflow-hidden rounded-2xl bg-surface-container-lowest shadow-[0_12px_32px_-4px_rgba(0,101,101,0.08)]">
+<div class="flex flex-col md:flex-row">
+<div class="w-full md:w-1/3 bg-cover bg-center h-48 md:h-auto" data-alt="Modern high-end medical clinic interior with soft teal accents, clean glass partitions and warm ambient lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNrc_z7PSKdkE3Q8E59xF5f1y-VYbK4qWgmzT0n2DHOFvm4vzWUf7JBaBoisTteogOiP0rWdbzQ5mOJN_13RXI91bI1nLVNi6EY6LzCLd-eQoGp20Z8rsV7XkGdVkq7PjLyQmOuPIIK9kYuPbf_AkkWN0DLA2KDJ39Jo7kegl5hxFTdeRyfj33QDf5FGglk56BjmMiZWMHNDtezUHf5FhX34sRmKNKpaY8-G8e4J3TxBXuwZDQQ81cImO2OuSGBnAxW41Z1Sv4VwI')"></div>
+<div class="flex-1 p-8">
+<div class="flex items-center gap-2 mb-4">
+<span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Upcoming Appointment</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-background mb-1">Dr. Sarah Smith</h3>
+<p class="text-on-surface-variant font-medium mb-6">Senior Cardiologist • Cardiology Center A</p>
+<div class="flex flex-wrap gap-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant uppercase font-bold">Date</p>
+<p class="text-sm font-semibold">Tomorrow, Oct 12</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant uppercase font-bold">Time</p>
+<p class="text-sm font-semibold">10:30 AM (45 min)</p>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex-1 md:flex-none px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="video_call">video_call</span>
+                                        Join Consultation
+                                    </button>
+<button class="flex-1 md:flex-none px-6 py-3 bg-surface-container-low text-on-surface rounded-xl font-bold text-sm hover:bg-surface-container-high transition-all">
+                                        Reschedule
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Action Strip -->
+<div class="grid grid-cols-3 gap-4">
+<button class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-surface-container-low hover:bg-primary hover:text-on-primary transition-all duration-300">
+<div class="size-14 rounded-full bg-surface-container-lowest group-hover:bg-primary-container flex items-center justify-center mb-3 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary" data-icon="add_circle">add_circle</span>
+</div>
+<span class="font-headline font-bold text-sm">Book Visit</span>
+</button>
+<button class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-surface-container-low hover:bg-secondary hover:text-on-primary transition-all duration-300">
+<div class="size-14 rounded-full bg-surface-container-lowest group-hover:bg-secondary-container flex items-center justify-center mb-3 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-secondary group-hover:text-on-primary" data-icon="chat">chat</span>
+</div>
+<span class="font-headline font-bold text-sm">Messages</span>
+</button>
+<button class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-surface-container-low hover:bg-tertiary hover:text-on-primary transition-all duration-300">
+<div class="size-14 rounded-full bg-surface-container-lowest group-hover:bg-tertiary-container flex items-center justify-center mb-3 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-tertiary group-hover:text-on-primary" data-icon="folder_open">folder_open</span>
+</div>
+<span class="font-headline font-bold text-sm">Records</span>
+</button>
+</div>
+</div>
+<!-- Recent Activity Sidebar -->
+<aside class="lg:col-span-4">
+<div class="rounded-2xl bg-surface-container-low p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-headline font-bold text-on-background">Recent Activity</h3>
+<button class="text-primary text-xs font-bold hover:underline">View All</button>
+</div>
+<div class="space-y-6">
+<!-- Activity Item 1 -->
+<div class="flex gap-4">
+<div class="relative">
+<div class="size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="lab_research">lab_research</span>
+</div>
+<div class="absolute -bottom-1 -right-1 size-4 rounded-full bg-white flex items-center justify-center border border-surface-container-low">
+<span class="material-symbols-outlined text-[10px] text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-background">Lab Results Available</p>
+<p class="text-xs text-on-surface-variant mb-1">Blood Panel - Lipid Profile</p>
+<p class="text-[10px] font-bold text-primary/60 uppercase">2 Hours Ago</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="medication">medication</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-background">Prescription Renewed</p>
+<p class="text-xs text-on-surface-variant mb-1">Lisinopril 10mg - Refill #3</p>
+<p class="text-[10px] font-bold text-primary/60 uppercase">Yesterday</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]" data-icon="payments">payments</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-background">Payment Processed</p>
+<p class="text-xs text-on-surface-variant mb-1">Invoice #HS-99283-A</p>
+<p class="text-[10px] font-bold text-primary/60 uppercase">Oct 9, 2023</p>
+</div>
+</div>
+<!-- Activity Item 4 -->
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-background">Health Summary Updated</p>
+<p class="text-xs text-on-surface-variant mb-1">Annual Physical Records added</p>
+<p class="text-[10px] font-bold text-primary/60 uppercase">Oct 7, 2023</p>
+</div>
+</div>
+</div>
+<!-- Health Tip Card -->
+<div class="mt-10 p-5 rounded-xl bg-gradient-to-br from-tertiary to-tertiary-container text-on-tertiary-container shadow-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-lg" data-icon="lightbulb">lightbulb</span>
+<span class="text-xs font-bold uppercase tracking-wider">Daily Health Tip</span>
+</div>
+<p class="text-sm leading-relaxed opacity-90">Remember to stay hydrated! Drinking 8 glasses of water daily helps maintain optimal heart health and energy levels.</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer / Bottom Navigation -->
+<footer class="mt-12 bg-surface-container-low border-t border-outline-variant/10 py-10 px-6 md:px-10 lg:px-40">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-primary/60">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="text-xs font-medium">HIPAA Compliant &amp; Encrypted Data</span>
+</div>
+<div class="flex gap-8 text-xs font-bold text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+</div>
+<p class="text-[10px] text-on-surface-variant/60 font-medium">© 2023 HealthSync Medical Group. All rights reserved.</p>
+</div>
+</footer>
+</div>
+</div>
+</body></html>
+```
+
+## File: design/signin.html
+Language: html | Tokens: 2687 | Size: 10749 bytes
+
+```html
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#c8bfff",
+                      "primary": "#006565",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#93f2f2",
+                      "surface-bright": "#f7fafa",
+                      "on-background": "#181c1d",
+                      "on-surface-variant": "#3e4949",
+                      "on-secondary-fixed": "#190064",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#76d6d5",
+                      "primary-container": "#008080",
+                      "error": "#ba1a1a",
+                      "secondary": "#5d4cbf",
+                      "tertiary-fixed-dim": "#ffb692",
+                      "secondary-container": "#9888ff",
+                      "tertiary-fixed": "#ffdbcb",
+                      "background": "#f7fafa",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#76d6d5",
+                      "secondary-fixed": "#e5deff",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#8b4823",
+                      "outline-variant": "#bdc9c8",
+                      "on-primary-fixed-variant": "#004f4f",
+                      "on-tertiary-container": "#fff9f7",
+                      "outline": "#6e7979",
+                      "surface-variant": "#e0e3e3",
+                      "surface-tint": "#006a6a",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#2d3131",
+                      "surface-container-highest": "#e0e3e3",
+                      "on-primary-fixed": "#002020",
+                      "on-tertiary-fixed": "#341100",
+                      "surface-container-low": "#f1f4f4",
+                      "tertiary-container": "#a96039",
+                      "surface-container-high": "#e6e9e9",
+                      "inverse-on-surface": "#eef1f1",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#d7dbdb",
+                      "on-surface": "#181c1d",
+                      "on-tertiary-fixed-variant": "#733512",
+                      "on-primary-container": "#e3fffe",
+                      "on-secondary-fixed-variant": "#4532a6",
+                      "surface": "#f7fafa",
+                      "surface-container": "#ebeeee",
+                      "on-secondary-container": "#2e1390"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope", "sans-serif"],
+                      "body": ["Inter", "sans-serif"],
+                      "label": ["Inter", "sans-serif"]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ethereal-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .medical-glow {
+            box-shadow: 0 12px 32px -4px rgba(0, 101, 101, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<div class="relative min-h-screen flex items-center justify-center p-6 overflow-hidden">
+<!-- Background Decorative Elements -->
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-3xl"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/5 blur-3xl"></div>
+<div class="layout-container w-full max-w-[1100px] grid lg:grid-cols-2 bg-surface-container-lowest rounded-2xl overflow-hidden medical-glow relative z-10">
+<!-- Left Side: Visual/Branding -->
+<div class="hidden lg:flex flex-col justify-between p-12 bg-primary relative overflow-hidden">
+<div class="absolute inset-0 opacity-20" data-alt="Close-up of a modern medical research facility with soft teal lighting and high-tech equipment in a clean laboratory environment" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuArm9cBwTtXIU-MKVqY5DkFFHN1gC2ZwngJCZTlJ59LE8qEDMue0vFqJjIuJYQZIKu9hgr4K_dAGSYRsuzF4K8AYECXtPDr41aXHdpzJK52x4OHE1atnmypLxbwKEKcoIKKfEpCQdI3EiPxgoWwwIfqj-Hw0mM36TEtqnjj-yw26wk3vjKjI9m9CN8DrZJGdpTEocXDL4tIx0rutBuGkx0wV9iM0oK8GKydllAqb9Jvl_bY_GUZiMW1nXw9-FpTaMDPyQcPDMwPk0c'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-container opacity-80"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 text-white mb-12">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="font-headline text-2xl font-extrabold tracking-tight">HealthSync</h1>
+</div>
+<h2 class="font-headline text-4xl font-black text-white leading-tight mb-6">Advancing the future of clinical care.</h2>
+<p class="text-primary-fixed text-lg max-w-sm leading-relaxed">A unified digital ecosystem designed for seamless patient-provider collaboration and data-driven insights.</p>
+</div>
+<div class="relative z-10 flex gap-4">
+<div class="p-4 rounded-xl ethereal-glass flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary-fixed/20 flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-primary-fixed uppercase tracking-wider">HIPAA SECURE</p>
+<p class="text-xs text-white">Encrypted patient data</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="flex flex-col p-8 md:p-16 bg-surface-container-lowest">
+<div class="mb-10 lg:hidden flex items-center gap-2">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="font-headline text-xl font-bold text-primary">HealthSync</h2>
+</div>
+<div class="mb-8">
+<h3 class="font-headline text-3xl font-black text-on-surface mb-2">Welcome Back</h3>
+<p class="text-on-surface-variant font-medium">Sign in to your clinical workspace</p>
+</div>
+<!-- Role Selector -->
+<div class="mb-8">
+<p class="text-xs font-bold text-outline mb-3 uppercase tracking-[0.1em]">Select Identity</p>
+<div class="flex bg-surface-container-low p-1.5 rounded-xl">
+<label class="flex-1 cursor-pointer">
+<input checked="" class="sr-only peer" name="role" type="radio" value="patient"/>
+<div class="py-3 text-center rounded-lg font-semibold text-sm transition-all peer-checked:bg-surface-container-lowest peer-checked:text-primary peer-checked:shadow-sm text-outline">
+                                Patient
+                            </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="sr-only peer" name="role" type="radio" value="doctor"/>
+<div class="py-3 text-center rounded-lg font-semibold text-sm transition-all peer-checked:bg-surface-container-lowest peer-checked:text-secondary peer-checked:shadow-sm text-outline">
+                                Doctor
+                            </div>
+</label>
+</div>
+</div>
+<!-- Form -->
+<form class="space-y-5">
+<div class="space-y-2">
+<label class="text-xs font-bold text-outline uppercase tracking-[0.1em] ml-1">Email Address</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none" placeholder="e.g. name@clinic.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<label class="text-xs font-bold text-outline uppercase tracking-[0.1em]">Password</label>
+<a class="text-xs font-bold text-primary hover:text-primary-container" href="#">Forgot?</a>
+</div>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 pr-12 text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all outline-none" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 text-outline hover:text-on-surface" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:opacity-95 transition-all" type="submit">
+                            Sign into Dashboard
+                        </button>
+</div>
+</form>
+<div class="mt-8 pt-8 border-t border-surface-container-high text-center">
+<p class="text-on-surface-variant text-sm">
+                        New to HealthSync? 
+                        <a class="text-primary font-bold hover:underline ml-1" href="#">Create an account</a>
+</p>
+</div>
+<!-- Footer Support -->
+<div class="mt-auto pt-10 flex justify-center gap-6 text-outline">
+<a class="text-[11px] font-bold uppercase tracking-widest hover:text-on-surface" href="#">Privacy</a>
+<a class="text-[11px] font-bold uppercase tracking-widest hover:text-on-surface" href="#">Terms</a>
+<a class="text-[11px] font-bold uppercase tracking-widest hover:text-on-surface" href="#">Support</a>
+</div>
+</div>
+</div>
+</div>
+</body></html>
+```
+
+## File: src/hooks/useMessages.ts
+Language: typescript | Tokens: 1031 | Size: 4124 bytes
+
+**Imports:** react, ../services/firebase/config
+
+```typescript
+import { useEffect, useState } from 'react';
+import { db } from '../services/firebase/config';
+import {
+    collection, query, where, onSnapshot, orderBy,
+    limit, limitToLast, endBefore, startAfter, doc, getDocs, addDoc, updateDoc
+} from 'firebase/firestore';
+
+export interface ChatThread {
+    id: string;
+    participants: string[];
+    lastMessage: string;
+    updatedAt: string;
+}
+
+export interface ChatMessage {
+    id: string;
+    senderId: string;
+    content: string;
+    timestamp: string;
+}
+
+const PAGE_SIZE = 20;
+
+export const useChatThreads = (userId: string | undefined) => {
+    const [threads, setThreads] = useState<ChatThread[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!userId) { setLoading(false); return; }
+
+        const q = query(
+            collection(db, 'chats'),
+            where('participants', 'array-contains', userId)
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const results: ChatThread[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ChatThread));
+            results.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+            setThreads(results);
+            setLoading(false);
+        }, (err) => {
+            console.error('[useChatThreads]', err);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [userId]);
+
+    return { threads, loading };
+};
+
+export const useChatMessages = (chatId: string | null) => {
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(false);
+    const [oldestDoc, setOldestDoc] = useState<any>(null);
+
+    useEffect(() => {
+        if (!chatId) { setMessages([]); setLoading(false); return; }
+
+        setLoading(true);
+        setOldestDoc(null);
+
+        // Real-time listener for the latest PAGE_SIZE messages
+        const q = query(
+            collection(db, `chats/${chatId}/messages`),
+            orderBy('timestamp', 'asc'),
+            limit(PAGE_SIZE)
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const results: ChatMessage[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ChatMessage));
+            setMessages(results);
+            setHasMore(snapshot.docs.length === PAGE_SIZE);
+            if (snapshot.docs.length > 0) setOldestDoc(snapshot.docs[0]);
+            setLoading(false);
+        }, (err) => {
+            console.error('[useChatMessages]', err);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [chatId]);
+
+    // Load older messages — paginate backwards
+    const loadMore = async () => {
+        if (!chatId || !oldestDoc) return;
+        const q = query(
+            collection(db, `chats/${chatId}/messages`),
+            orderBy('timestamp', 'asc'),
+            endBefore(oldestDoc),
+            limitToLast(PAGE_SIZE)
+        );
+        const snapshot = await getDocs(q);
+        const older = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ChatMessage));
+        setMessages(prev => [...older, ...prev]);
+        setHasMore(snapshot.docs.length === PAGE_SIZE);
+        if (snapshot.docs.length > 0) setOldestDoc(snapshot.docs[0]);
+    };
+
+    const sendMessage = async (senderId: string, content: string) => {
+        if (!chatId) return;
+
+        // Optimistic UI — insert immediately, rollback on failure
+        const tempId = `temp_${Date.now()}`;
+        const now = new Date().toISOString();
+        setMessages(prev => [...prev, { id: tempId, senderId, content, timestamp: now }]);
+
+        try {
+            await addDoc(collection(db, `chats/${chatId}/messages`), { senderId, content, timestamp: now });
+            await updateDoc(doc(db, 'chats', chatId), { lastMessage: content, updatedAt: now });
+        } catch (e) {
+            console.error('[sendMessage] failed:', e);
+            setMessages(prev => prev.filter(m => m.id !== tempId)); // rollback
+        }
+    };
+
+    return { messages, loading, hasMore, loadMore, sendMessage };
+};
+
+```
+
+## File: src/hooks/usePatientRecords.ts
+Language: typescript | Tokens: 579 | Size: 2318 bytes
+
+**Imports:** react, ../services/firebase/config, firebase/firestore
+
+```typescript
+import { useEffect, useState } from 'react';
+import { db } from '../services/firebase/config';
+import { collection, query, where, onSnapshot, limit, startAfter, getDocs } from 'firebase/firestore';
+
+export interface RecordItem {
+    id: string;
+    patientId: string;
+    doctorId: string;
+    type: 'prescription' | 'lab' | 'visit' | 'vital';
+    title: string;
+    details: string;
+    date: string;
+    createdAt: string;
+}
+
+const PAGE_SIZE = 10;
+
+export const usePatientRecords = (patientId: string | undefined) => {
+    const [records, setRecords] = useState<RecordItem[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [hasMore, setHasMore] = useState(false);
+
+    useEffect(() => {
+        if (!patientId) {
+            setLoading(false);
+            return;
+        }
+
+        let _recordsMap: Record<string, RecordItem> = {};
+        const unsubscribes: (() => void)[] = [];
+        const collectionsToFetch = ['prescriptions', 'labs', 'visits'];
+
+        collectionsToFetch.forEach(colName => {
+            const q = query(
+                collection(db, colName),
+                where('patientId', '==', patientId),
+                limit(PAGE_SIZE)
+            );
+
+            const sub = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === 'removed') {
+                        delete _recordsMap[change.doc.id];
+                    } else {
+                        _recordsMap[change.doc.id] = {
+                            id: change.doc.id,
+                            ...change.doc.data(),
+                            type: colName.replace(/s$/, '') as any
+                        };
+                    }
+                });
+
+                const sorted = Object.values(_recordsMap).sort(
+                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setRecords(sorted);
+                setHasMore(sorted.length >= PAGE_SIZE);
+            }, (err) => {
+                console.error(`[usePatientRecords] ${colName}:`, err);
+            });
+
+            unsubscribes.push(sub);
+        });
+
+        setLoading(false);
+        return () => unsubscribes.forEach(u => u());
+    }, [patientId]);
+
+    return { records, loading, hasMore };
+};
+
+```
+
+## File: src/app/globals.css
+Language: css | Tokens: 550 | Size: 2202 bytes
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-secondary-fixed-dim: #c8bfff;
+  --color-primary: #006565;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #93f2f2;
+  --color-surface-bright: #f7fafa;
+  --color-on-background: #181c1d;
+  --color-on-surface-variant: #3e4949;
+  --color-on-secondary-fixed: #190064;
+  --color-on-secondary: #ffffff;
+  --color-primary-fixed-dim: #76d6d5;
+  --color-primary-container: #008080;
+  --color-error: #ba1a1a;
+  --color-secondary: #5d4cbf;
+  --color-tertiary-fixed-dim: #ffb692;
+  --color-secondary-container: #9888ff;
+  --color-tertiary-fixed: #ffdbcb;
+  --color-background: #f7fafa;
+  --color-on-error: #ffffff;
+  --color-on-tertiary: #ffffff;
+  --color-inverse-primary: #76d6d5;
+  --color-secondary-fixed: #e5deff;
+  --color-error-container: #ffdad6;
+  --color-tertiary: #8b4823;
+  --color-outline-variant: #bdc9c8;
+  --color-on-primary-fixed-variant: #004f4f;
+  --color-on-tertiary-container: #fff9f7;
+  --color-outline: #6e7979;
+  --color-surface-variant: #e0e3e3;
+  --color-surface-tint: #006a6a;
+  --color-surface-container-lowest: #ffffff;
+  --color-inverse-surface: #2d3131;
+  --color-surface-container-highest: #e0e3e3;
+  --color-on-primary-fixed: #002020;
+  --color-on-tertiary-fixed: #341100;
+  --color-surface-container-low: #f1f4f4;
+  --color-tertiary-container: #a96039;
+  --color-surface-container-high: #e6e9e9;
+  --color-inverse-on-surface: #eef1f1;
+  --color-on-error-container: #93000a;
+  --color-surface-dim: #d7dbdb;
+  --color-on-surface: #181c1d;
+  --color-on-tertiary-fixed-variant: #733512;
+  --color-on-primary-container: #e3fffe;
+  --color-on-secondary-fixed-variant: #4532a6;
+  --color-surface: #f7fafa;
+  --color-surface-container: #ebeeee;
+  --color-on-secondary-container: #2e1390;
+
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  --radius-xl: 0.75rem;
+}
+
+@layer utilities {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .ethereal-glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+  }
+  .medical-glow {
+    box-shadow: 0 12px 32px -4px rgba(0, 101, 101, 0.08);
+  }
+}
+
+```
+
+## File: src/services/firebase/auth.ts
+Language: typescript | Tokens: 535 | Size: 2142 bytes
+
+**Imports:** ./config, firebase/firestore, @/store
+
+```typescript
+import { auth, db } from "./config";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
+} from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import type { Role } from "@/store";
+
+export const registerUser = async (email: string, password: string, name: string, role: Role) => {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await updateProfile(user, { displayName: name });
+
+    // Store the user document
+    const userDocRef = doc(db, "users", user.uid);
+    await setDoc(userDocRef, {
+        uid: user.uid,
+        name,
+        email,
+        role,
+        createdAt: new Date().toISOString(),
+        photoURL: user.photoURL || null
+    });
+
+    // Also create base profiles for the chosen role
+    if (role === 'patient') {
+        await setDoc(doc(db, "patients", user.uid), {
+            dob: null,
+            bloodGroup: null,
+            allergies: [],
+            height: null,
+            weight: null,
+            insurance: {},
+            emergencyContact: {}
+        });
+    } else if (role === 'doctor') {
+        await setDoc(doc(db, "doctors", user.uid), {
+            specialty: 'General Practice',
+            qualifications: [],
+            clinicName: 'Patient-Doc Clinic',
+            rating: 5.0
+        });
+    }
+
+    return { uid: user.uid, email, name, role };
+};
+
+export const loginUser = async (email: string, password: string) => {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    const userDocRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userDocRef);
+
+    if (!userSnap.exists()) {
+        throw new Error("User record not found in Firestore.");
+    }
+
+    const userData = userSnap.data();
+    return {
+        uid: user.uid,
+        email: user.email,
+        name: userData.name,
+        role: userData.role as Role,
+        photoURL: userData.photoURL
+    };
+};
+
+export const logoutUser = async () => {
+    return signOut(auth);
+};
+
+```
+
+## File: src/services/firebase/appointments.ts
+Language: typescript | Tokens: 504 | Size: 2018 bytes
+
+**Imports:** ./config, firebase/firestore
+
+```typescript
+import { db } from "./config";
+import { runTransaction, doc, collection, serverTimestamp } from "firebase/firestore";
+
+/**
+ * Atomically book a doctor slot.
+ *
+ * Guarantees:
+ * - Only one patient can book a slot (server-side lock via transaction)
+ * - If two patients try simultaneously, one gets a clean user-facing error
+ * - The appointment record always includes both doctorId AND patientId
+ */
+export async function bookSlot(
+    patientId: string,
+    doctorId: string,
+    dateStr: string,    // "yyyy-MM-dd"
+    slotId: string,
+    slotTime: string,   // ISO string
+    reason: string
+) {
+    const slotRef = doc(db, `doctors/${doctorId}/availability/${dateStr}/slots/${slotId}`);
+
+    await runTransaction(db, async (tx) => {
+        const slotSnap = await tx.get(slotRef);
+
+        if (!slotSnap.exists()) {
+            throw new Error("This slot no longer exists. Please refresh and try again.");
+        }
+
+        if (!slotSnap.data().isOpen) {
+            throw new Error("This slot was just booked. Please select a different time.");
+        }
+
+        // Atomic write 1: close the slot
+        tx.update(slotRef, { isOpen: false });
+
+        // Atomic write 2: create appointment (always includes patientId + doctorId)
+        const apptRef = doc(collection(db, "appointments"));
+        tx.set(apptRef, {
+            patientId,          // ✅ required for patient queries
+            doctorId,           // ✅ required for doctor queue queries
+            slot: { time: slotTime, slotId },
+            reason,
+            status: "pending",
+            notes: "",
+            createdAt: new Date().toISOString(),
+        });
+    });
+}
+
+/**
+ * Update appointment status — called by doctor on finalize.
+ */
+export async function finalizeAppointment(
+    appointmentId: string,
+    notes: string
+) {
+    const { updateDoc } = await import("firebase/firestore");
+    const ref = doc(db, "appointments", appointmentId);
+    await updateDoc(ref, {
+        status: "completed",
+        notes,
+    });
+}
+
+```
+
+## File: src/hooks/useAppointments.ts
+Language: typescript | Tokens: 493 | Size: 1973 bytes
+
+**Imports:** react, ../services/firebase/config, firebase/firestore
+
+```typescript
+import { useEffect, useState } from 'react';
+import { db } from '../services/firebase/config';
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
+
+export interface Appointment {
+    id: string;
+    patientId: string;
+    doctorId: string;
+    slot: { time: string }; // ISO string format
+    reason: string;
+    status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+    notes: string;
+}
+
+export const useAppointments = (userId: string | undefined, role: 'patient' | 'doctor' | undefined) => {
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!userId || !role) {
+            setLoading(false);
+            return;
+        }
+
+        const appointmentsRef = collection(db, 'appointments');
+        const fieldMatch = role === 'patient' ? 'patientId' : 'doctorId';
+
+        // We filter by role and order by slot time. Note: requires composite index.
+        const q = query(
+            appointmentsRef,
+            where(fieldMatch, '==', userId),
+            where('status', 'in', ['pending', 'confirmed'])
+        );
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const results: Appointment[] = [];
+            snapshot.forEach(doc => {
+                results.push({ id: doc.id, ...doc.data() } as Appointment);
+            });
+            // Sort by time in client to avoid immediate index requirement blocking execution
+            results.sort((a, b) => new Date(a.slot.time).getTime() - new Date(b.slot.time).getTime());
+
+            setAppointments(results);
+            setLoading(false);
+        }, (err) => {
+            console.error(err);
+            setError(err.message);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [userId, role]);
+
+    return { appointments, loading, error };
+};
+
+```
+
+## File: src/hooks/useAuth.ts
+Language: typescript | Tokens: 383 | Size: 1533 bytes
+
+**Imports:** react, ../services/firebase/config, firebase/auth, firebase/firestore, @/store
+
+```typescript
+import { useEffect } from 'react';
+import { auth, db } from '../services/firebase/config';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { useAppStore, type Role } from '@/store';
+
+export const useAuthListener = () => {
+    const { setUser, setAuthLoading } = useAppStore();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                try {
+                    const userDocRef = doc(db, "users", firebaseUser.uid);
+                    const userSnap = await getDoc(userDocRef);
+
+                    if (userSnap.exists()) {
+                        const data = userSnap.data();
+                        setUser({
+                            uid: firebaseUser.uid,
+                            email: firebaseUser.email,
+                            name: data.name || firebaseUser.displayName || '',
+                            role: data.role as Role,
+                            photoURL: data.photoURL || undefined
+                        });
+                    } else {
+                        setUser(null);
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    setUser(null);
+                }
+            } else {
+                setUser(null);
+            }
+            setAuthLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [setUser, setAuthLoading]);
+};
+
+```
+
+## File: src/services/firebase/messages.ts
+Language: typescript | Tokens: 331 | Size: 1324 bytes
+
+**Imports:** ./config, firebase/firestore
+
+```typescript
+import { db } from "./config";
+import { doc, setDoc, addDoc, collection, serverTimestamp, updateDoc } from "firebase/firestore";
+
+/**
+ * Get or create a chat thread between two users.
+ * Uses a deterministic ID (sorted UIDs joined by "_") so only ONE thread
+ * ever exists between any two users — no duplicates possible.
+ */
+export async function getOrCreateThread(uid1: string, uid2: string): Promise<string> {
+    const threadId = [uid1, uid2].sort().join("_");
+    const ref = doc(db, "chats", threadId);
+
+    // setDoc with merge:true creates the doc if missing, updates if exists
+    await setDoc(ref, {
+        participants: [uid1, uid2],
+        lastMessage: "",
+        updatedAt: new Date().toISOString(),
+    }, { merge: true });
+
+    return threadId;
+}
+
+/**
+ * Send a message inside a chat thread.
+ * Also updates thread's lastMessage + updatedAt for inbox ordering.
+ */
+export async function sendMessage(threadId: string, senderId: string, content: string) {
+    const now = new Date().toISOString();
+
+    await addDoc(collection(db, "chats", threadId, "messages"), {
+        senderId,
+        content,
+        timestamp: now,
+    });
+
+    // Update thread metadata so inbox list sorts correctly
+    await updateDoc(doc(db, "chats", threadId), {
+        lastMessage: content,
+        updatedAt: now,
+    });
+}
+
+```
+
+## File: src/services/firebase/records.ts
+Language: typescript | Tokens: 314 | Size: 1258 bytes
+
+**Imports:** ./config, firebase/firestore, date-fns
+
+```typescript
+import { db } from "./config";
+import { collection, addDoc, doc, updateDoc, writeBatch } from "firebase/firestore";
+import { format } from "date-fns";
+
+/**
+ * Add a health record to a top-level collection (prescriptions / labs / visits).
+ */
+export async function addRecord(
+    type: "prescriptions" | "labs" | "visits",
+    patientId: string,
+    doctorId: string,
+    title: string,
+    details: string
+) {
+    const now = new Date().toISOString();
+    await addDoc(collection(db, type), {
+        patientId,
+        doctorId,
+        title,
+        details,
+        date: now,
+        createdAt: now,
+    });
+}
+
+/**
+ * Generate a full day of 30-min slots for a doctor.
+ * Uses writeBatch to atomically write all slots at once.
+ */
+export async function generateDoctorSlots(
+    doctorId: string,
+    date: Date,
+    times: string[]  // ISO time strings
+) {
+    const batch = writeBatch(db);
+    const dateStr = format(date, "yyyy-MM-dd");
+
+    times.forEach((isoTime) => {
+        const slotId = `slot_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+        const slotRef = doc(db, `doctors/${doctorId}/availability/${dateStr}/slots/${slotId}`);
+        batch.set(slotRef, { time: isoTime, isOpen: true });
+    });
+
+    await batch.commit();
+}
+
+```
+
+## File: src/store/index.ts
+Language: typescript | Tokens: 227 | Size: 908 bytes
+
+**Imports:** zustand
+
+```typescript
+import { create } from 'zustand';
+
+export type Role = 'patient' | 'doctor';
+
+interface UserData {
+    uid: string;
+    email: string | null;
+    name: string;
+    role: Role | null;
+    photoURL?: string;
+}
+
+interface AppState {
+    user: UserData | null;
+    isLoadingAuth: boolean;
+    setUser: (user: UserData | null) => void;
+    setAuthLoading: (loading: boolean) => void;
+    clearAuth: () => void;
+
+    // Minimal cache to avoid redundant reads
+    doctorsCache: any[];
+    setDoctorsCache: (doctors: any[]) => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+    user: null,
+    isLoadingAuth: true,
+    setUser: (user) => set({ user, isLoadingAuth: false }),
+    setAuthLoading: (loading) => set({ isLoadingAuth: loading }),
+    clearAuth: () => set({ user: null, isLoadingAuth: false }),
+
+    doctorsCache: [],
+    setDoctorsCache: (doctors) => set({ doctorsCache: doctors }),
+}));
+
+```
+
+## File: src/services/firebase/config.ts
+Language: typescript | Tokens: 197 | Size: 789 bytes
+
+**Imports:** firebase/app, firebase/auth, firebase/firestore, firebase/storage
+
+```typescript
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
+const firebaseConfig = {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+};
+
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
+
+```
+
+## File: eslint.config.mjs
+Language: javascript | Tokens: 116 | Size: 465 bytes
+
+**Imports:** eslint/config, eslint-config-next/core-web-vitals, eslint-config-next/typescript
+
+```javascript
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+
+```
+
+## File: next-env.d.ts
+Language: typescript | Tokens: 61 | Size: 247 bytes
+
+```typescript
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+import "./.next/types/routes.d.ts";
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+
+```
+
+## File: next.config.ts
+Language: typescript | Tokens: 51 | Size: 204 bytes
+
+**Imports:** next
+
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+};
+
+export default nextConfig;
+
+
+```
+
+## File: postcss.config.mjs
+Language: javascript | Tokens: 23 | Size: 94 bytes
+
+```javascript
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+
+```
+
+
+---
+
+**Summary:**
+- Files Included: 20 / 20
+- Total Tokens: 27157 / 10000000000

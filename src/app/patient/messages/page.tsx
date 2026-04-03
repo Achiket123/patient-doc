@@ -6,7 +6,8 @@ import { useState } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
 import { db } from "@/services/firebase/config";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { getOrCreateThread } from "@/services/firebase/messages";
 
 export default function PatientMessages() {
     const { user } = useAppStore();
@@ -16,9 +17,8 @@ export default function PatientMessages() {
     const { messages, loading: messagesLoading, sendMessage } = useChatMessages(selectedThreadId);
 
     const [inputMsg, setInputMsg] = useState("");
-
-    // Logic to allow patients to initiate a chat with their doctor.
     const [creating, setCreating] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     const handleSend = () => {
         if (!inputMsg.trim() || !user || !selectedThreadId) return;
@@ -29,29 +29,22 @@ export default function PatientMessages() {
     const handleStartChat = async () => {
         if (!user) return;
         setCreating(true);
-        // Note: MVP hack. Find a doctor the patient has an appointment with, or just connect to the first doctor.
+        setErrorMsg("");
         try {
-            const snap = await getDocs(query(collection(db, "doctors")));
-            if (snap.empty) return;
-            const doctorId = snap.docs[0].id;
-
-            // Ensure no existing thread exists
-            const existingThread = threads.find(t => t.participants.includes(doctorId));
-            if (existingThread) {
-                setSelectedThreadId(existingThread.id);
-                setCreating(false);
+            // Find the first doctor in the system (MVP: ideally filtered by appointment)
+            const snap = await getDocs(collection(db, "doctors"));
+            if (snap.empty) {
+                setErrorMsg("No doctors available yet. Please try again later.");
                 return;
             }
+            const doctorId = snap.docs[0].id;
 
-            const res = await addDoc(collection(db, "chats"), {
-                participants: [user.uid, doctorId],
-                updatedAt: new Date().toISOString(),
-                lastMessage: "Conversation Started"
-            });
-
-            setSelectedThreadId(res.id);
-        } catch (e) {
+            // Deterministic thread ID — guaranteed single thread between two users
+            const threadId = await getOrCreateThread(user.uid, doctorId);
+            setSelectedThreadId(threadId);
+        } catch (e: any) {
             console.error(e);
+            setErrorMsg(e.message || "Failed to start chat.");
         } finally {
             setCreating(false);
         }
@@ -73,6 +66,9 @@ export default function PatientMessages() {
                         <span className="material-symbols-outlined">add</span>
                         {creating ? "Connecting..." : "New Chat"}
                     </button>
+                    {errorMsg && (
+                        <p className="text-xs text-error mt-2 text-center font-semibold">{errorMsg}</p>
+                    )}
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-3 flex flex-col gap-1 pb-4 no-scrollbar mt-4">

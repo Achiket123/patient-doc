@@ -3,6 +3,7 @@
 import { useAppStore } from "@/store";
 import { logoutUser } from "@/services/firebase/auth";
 import { useRouter } from "next/navigation";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function PatientLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -34,7 +35,7 @@ export default function PatientLayout({ children }: { children: React.ReactNode 
             </header>
 
             <main className="flex-1 px-6 py-8 md:px-10 lg:px-40 max-w-[1440px] mx-auto w-full">
-                {children}
+                <ErrorBoundary>{children}</ErrorBoundary>
             </main>
 
             <footer className="mt-12 bg-surface-container-low border-t border-outline-variant/10 py-10 px-6 md:px-10 lg:px-40">

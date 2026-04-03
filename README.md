@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HealthSync — Patient-Doc
 
-## Getting Started
+## ✅ Complete File Map
 
-First, run the development server:
+```
+src/
+  app/
+    page.tsx                    ← Auth (login + register)
+    patient/
+      layout.tsx                ← Header, footer, logout
+      home/page.tsx             ← Dashboard: appointments + activity feed
+      book/page.tsx             ← Book appointment (runTransaction)
+      messages/page.tsx         ← Real-time chat
+      records/page.tsx          ← Health records (prescriptions/labs/visits)
+    doctor/
+      layout.tsx
+      page.tsx                  ← Redirects to /doctor/queue
+      queue/page.tsx            ← Patient queue + SOAP notes
+      messages/page.tsx         ← Doctor chat
+      schedule/page.tsx         ← Slot generator (writeBatch)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  hooks/
+    useAuth.ts                  ← onAuthStateChanged → Zustand store
+    useAppointments.ts          ← onSnapshot (role-based)
+    useMessages.ts              ← paginated onSnapshot + sendMessage
+    usePatientRecords.ts        ← multi-collection onSnapshot
+
+  services/firebase/
+    config.ts                   ← initializeApp, db, auth, storage
+    auth.ts                     ← loginUser, registerUser, logoutUser
+    messages.ts                 ← sendMessage, createThread
+    appointments.ts             ← bookSlot (runTransaction), updateStatus
+    records.ts                  ← addRecord, generateDoctorSlots
+
+  components/
+    ErrorBoundary.tsx           ← React error boundary
+
+  store/
+    index.ts                    ← Zustand: user, role, profile cache
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Deploy Steps
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Fill in Firebase credentials
 
-## Learn More
+```bash
+cp .env.local.example .env.local
+# Open .env.local and paste your Firebase project values
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Install and run
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev       # development
+npm run build     # production build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Deploy Firestore rules + indexes
 
-## Deploy on Vercel
+```bash
+firebase deploy --only firestore:rules,firestore:indexes
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Deploy to Vercel (recommended)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install -g vercel
+vercel --prod
+# Set all NEXT_PUBLIC_FIREBASE_* env vars in Vercel dashboard
+```
+
+---
+
+## 🔥 Test Flow (in order)
+
+1. **Register** as a Doctor → fills in `doctors/{uid}` + sets role
+2. **Go to Schedule** → click "Auto Generate Shift" to create available slots
+3. **Register** as a Patient (different browser/incognito)
+4. **Book an Appointment** → select the doctor, date, slot → confirm
+5. **Doctor Queue** → see patient appear in real-time → fill SOAP → Finalize
+6. **Patient Messages** → start a new chat → send a message
+7. **Doctor Messages** → reply → both sides update in real time
+8. **Patient Records** → visit created by SOAP finalization appears here
+
+---
+
+## ⚠️ Important
+
+- The `design/*.html` files are **read-only UI references only**. The actual app is in `src/`.
+- All lint errors in VS Code before `npm install` are expected — packages aren't downloaded yet.
+- Set `NEXT_PUBLIC_APP_ENV=production` in Vercel for production deployments.
