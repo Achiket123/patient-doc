@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Auth rule
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    match /users/{uid} {
+      allow read: if isAuthenticated();
+      allow write: if request.auth.uid == uid;
+    }
+
+    match /patients/{uid} {
+        allow read, write: if request.auth.uid == uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'doctor';
+    }
+
+    match /doctors/{uid} {
+        allow read: if isAuthenticated();
+        allow write: if request.auth.uid == uid;
+    }
+
+    match /doctors/{uid}/availability/{date}/slots/{slotId} {
+        allow read: if isAuthenticated();
+        allow write: if request.auth.uid == uid || isAuthenticated(); // Patients need to write to book a slot
+    }
+
+    match /appointments/{id} {
+      allow read, write: if isAuthenticated() && (request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.doctorId || request.auth.uid == request.resource.data.patientId);
+    }
+    
+    match /messages/{threadId} {
+      allow read, write: if isAuthenticated() && request.auth.uid in resource.data.participants;
+      
+      match /chats/{chatId} {
+         allow read, write: if isAuthenticated() && request.auth.uid in get(/databases/$(database)/documents/messages/$(threadId)).data.participants;
+      }
+    }
+    
+    // Top-level records accessible by the patient or their doctor
+    match /prescriptions/{id} {
+       allow read, write: if isAuthenticated() && (request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.doctorId || request.auth.uid == request.resource.data.doctorId);
+    }
+    // Similar for labs, visits, vitals
+    match /{collection=**}/{id} {
+       allow read, write: if isAuthenticated() && (request.auth.uid == resource.data.patientId || request.auth.uid == resource.data.doctorId || request.auth.uid == request.resource.data.doctorId);
+    }
+  }
+}

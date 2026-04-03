@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-secondary-fixed-dim: #c8bfff;
+  --color-primary: #006565;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #93f2f2;
+  --color-surface-bright: #f7fafa;
+  --color-on-background: #181c1d;
+  --color-on-surface-variant: #3e4949;
+  --color-on-secondary-fixed: #190064;
+  --color-on-secondary: #ffffff;
+  --color-primary-fixed-dim: #76d6d5;
+  --color-primary-container: #008080;
+  --color-error: #ba1a1a;
+  --color-secondary: #5d4cbf;
+  --color-tertiary-fixed-dim: #ffb692;
+  --color-secondary-container: #9888ff;
+  --color-tertiary-fixed: #ffdbcb;
+  --color-background: #f7fafa;
+  --color-on-error: #ffffff;
+  --color-on-tertiary: #ffffff;
+  --color-inverse-primary: #76d6d5;
+  --color-secondary-fixed: #e5deff;
+  --color-error-container: #ffdad6;
+  --color-tertiary: #8b4823;
+  --color-outline-variant: #bdc9c8;
+  --color-on-primary-fixed-variant: #004f4f;
+  --color-on-tertiary-container: #fff9f7;
+  --color-outline: #6e7979;
+  --color-surface-variant: #e0e3e3;
+  --color-surface-tint: #006a6a;
+  --color-surface-container-lowest: #ffffff;
+  --color-inverse-surface: #2d3131;
+  --color-surface-container-highest: #e0e3e3;
+  --color-on-primary-fixed: #002020;
+  --color-on-tertiary-fixed: #341100;
+  --color-surface-container-low: #f1f4f4;
+  --color-tertiary-container: #a96039;
+  --color-surface-container-high: #e6e9e9;
+  --color-inverse-on-surface: #eef1f1;
+  --color-on-error-container: #93000a;
+  --color-surface-dim: #d7dbdb;
+  --color-on-surface: #181c1d;
+  --color-on-tertiary-fixed-variant: #733512;
+  --color-on-primary-container: #e3fffe;
+  --color-on-secondary-fixed-variant: #4532a6;
+  --color-surface: #f7fafa;
+  --color-surface-container: #ebeeee;
+  --color-on-secondary-container: #2e1390;
+
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  --radius-xl: 0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .ethereal-glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+  }
+  .medical-glow {
+    box-shadow: 0 12px 32px -4px rgba(0, 101, 101, 0.08);
+  }
 }

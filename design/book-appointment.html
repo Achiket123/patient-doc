@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book Appointment - Clinical Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8bfff",
+                        "primary": "#006565",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#93f2f2",
+                        "surface-bright": "#f7fafa",
+                        "on-background": "#181c1d",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#190064",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#76d6d5",
+                        "primary-container": "#008080",
+                        "error": "#ba1a1a",
+                        "secondary": "#5d4cbf",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "secondary-container": "#9888ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "background": "#f7fafa",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#76d6d5",
+                        "secondary-fixed": "#e5deff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#8b4823",
+                        "outline-variant": "#bdc9c8",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-tertiary-container": "#fff9f7",
+                        "outline": "#6e7979",
+                        "surface-variant": "#e0e3e3",
+                        "surface-tint": "#006a6a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2d3131",
+                        "surface-container-highest": "#e0e3e3",
+                        "on-primary-fixed": "#002020",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-container-low": "#f1f4f4",
+                        "tertiary-container": "#a96039",
+                        "surface-container-high": "#e6e9e9",
+                        "inverse-on-surface": "#eef1f1",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d7dbdb",
+                        "on-surface": "#181c1d",
+                        "on-tertiary-fixed-variant": "#733512",
+                        "on-primary-container": "#e3fffe",
+                        "on-secondary-fixed-variant": "#4532a6",
+                        "surface": "#f7fafa",
+                        "surface-container": "#ebeeee",
+                        "on-secondary-container": "#2e1390"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .medical-glow {
+            box-shadow: 0 12px 32px -4px rgba(0, 101, 101, 0.08);
+        }
+        .teal-gradient {
+            background: linear-gradient(135deg, #006565 0%, #008080 100%);
+        }
+        ::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bdc9c8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Minimal Header for Focused View -->
+<header class="flex items-center justify-between px-6 py-4 bg-surface/70 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline text-xl font-bold tracking-tight text-on-surface">Book Appointment</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary-fixed">
+<img alt="User profile" data-alt="Portrait of a young man with glasses and professional attire, soft clinical lighting background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDejNwmsiI2aSKuizvG-wYasXr41JHzPZcf41qRP7Otp_gZFdWpVny76mjMPjW_JtyuFKSBjPJAFkxcbd0Yv4rkRVkNIorx2Jl-ijskB31JRhbgWmgc4M9NR6PvQBtbXOrkYavPOjVMtbQ3Ltxp7E86hBFr01a1s905wUiFkxFemIbZTsgDh39wztz9_zQfCxvDXqkU6Cg6O4z0cTLfVrWE3nSXZl0jgjIndSOPT82eCYdlc1nWeL5uXNcVECZy3Ozh6oPdPEN4rvo"/>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-4xl mx-auto w-full px-6 py-8 space-y-10">
+<!-- Specialty Filter -->
+<section class="space-y-4">
+<h2 class="font-headline text-lg font-bold px-1">Select Specialty</h2>
+<div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-primary text-on-primary px-6 transition-all">
+<span class="text-sm font-semibold">All Specialties</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">monitor_heart</span>
+<span class="text-sm font-medium">Cardiology</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">psychiatry</span>
+<span class="text-sm font-medium">Neurology</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">child_care</span>
+<span class="text-sm font-medium">Pediatrics</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface px-6 transition-all">
+<span class="material-symbols-outlined text-[20px]">vaccines</span>
+<span class="text-sm font-medium">Dermatology</span>
+</button>
+</div>
+</section>
+<!-- Doctor List -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline text-lg font-bold">Available Doctors</h2>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Doctor Card 1 -->
+<label class="relative group cursor-pointer">
+<input checked="" class="peer sr-only" name="doctor" type="radio"/>
+<div class="p-4 rounded-xl bg-surface-container-lowest medical-glow border-2 border-transparent peer-checked:border-primary transition-all flex items-center gap-4">
+<div class="size-16 rounded-xl overflow-hidden bg-surface-container-high relative">
+<img class="object-cover w-full h-full" data-alt="Professional headshot of a friendly male doctor in a white lab coat with a stethoscope around his neck" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt0sc7n1OGGqj9bVnWTseFimic_r9oXgo6T-LeJ2CnViDhqwDBbK1Ba2KXHliZfLsjsWLFn0qr1r5e5R4t7zKUvo_5bdNCNkFvGkfu6C0rBw9ec6x9obaKnKLUzslByvbBEsvw8WLpEdv3Fyqt1EvclW0Xg0Mw6w1t3ij4owQkjM6uvYe8UJFhOsEnnCpMWrRpNcB0t7rT-KuNigPPuq3WhCqGenD_2DMJnj2EiBpwJMO_-AjMj_7Le_5uG6ad4uxR1y07hKPQ-Ac"/>
+<div class="absolute bottom-1 right-1 size-3 bg-green-500 border-2 border-white rounded-full"></div>
+</div>
+<div class="flex-1">
+<h3 class="font-headline font-bold text-on-surface">Dr. Sarah Jenkins</h3>
+<p class="text-xs text-outline font-medium uppercase tracking-wider">Senior Cardiologist</p>
+<div class="flex items-center gap-1 mt-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.9 (120 reviews)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 peer-checked:opacity-100 transition-opacity">check_circle</span>
+</div>
+</label>
+<!-- Doctor Card 2 -->
+<label class="relative group cursor-pointer">
+<input class="peer sr-only" name="doctor" type="radio"/>
+<div class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container-high border-2 border-transparent peer-checked:border-primary peer-checked:bg-surface-container-lowest peer-checked:medical-glow transition-all flex items-center gap-4">
+<div class="size-16 rounded-xl overflow-hidden bg-surface-container-high relative">
+<img class="object-cover w-full h-full" data-alt="Portrait of a professional female doctor in a clinical setting with a soft smile and warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1zTd6HYsWtwRLhAoyqkGbrd-WgP838iofnv-AR2sBhH85lQVMJ6LSVxbVdRUHsoBu3ET0ldSK4wa4aotT4evHxrsg8sijKycIFhfBfAT6erXYY4sHp3D6ReS2V8GHlZzvKpssbEGJuPBrJfelgQOu4tyqkdx-aQJ2e69Kp3dMPS4iYPXreWSzOFoNZZsyUwFuqAY1zi5-6Holjb2V1g8HiwMzL7mXhOy4YiK5JQJgEMBnUAa6Qa659t6TicYFBFo-VipRIdOYuLc"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline font-bold text-on-surface">Dr. Marcus Thorne</h3>
+<p class="text-xs text-outline font-medium uppercase tracking-wider">Neurologist</p>
+<div class="flex items-center gap-1 mt-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.8 (94 reviews)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 peer-checked:opacity-100 transition-opacity">check_circle</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Date Strip -->
+<section class="space-y-4">
+<h2 class="font-headline text-lg font-bold px-1">Select Date</h2>
+<div class="bg-surface-container-low rounded-xl p-2 flex gap-2 overflow-x-auto no-scrollbar">
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg bg-surface-container-lowest medical-glow border-b-4 border-primary">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Mon</span>
+<span class="font-headline text-xl font-extrabold text-primary">12</span>
+<span class="text-[10px] font-bold text-primary">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Tue</span>
+<span class="font-headline text-xl font-bold text-on-surface">13</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Wed</span>
+<span class="font-headline text-xl font-bold text-on-surface">14</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Thu</span>
+<span class="font-headline text-xl font-bold text-on-surface">15</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Fri</span>
+<span class="font-headline text-xl font-bold text-on-surface">16</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+<button class="flex flex-col items-center justify-center min-w-[70px] py-3 rounded-lg hover:bg-surface-container-high transition-colors opacity-50">
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Sat</span>
+<span class="font-headline text-xl font-bold text-on-surface">17</span>
+<span class="text-[10px] font-bold text-outline">OCT</span>
+</button>
+</div>
+</section>
+<!-- Time Slots -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline text-lg font-bold">Morning Slots</h2>
+<span class="text-xs font-bold text-outline-variant uppercase tracking-widest">GMT +2:00</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<!-- Available -->
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            09:00 AM
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            09:30 AM
+                        </div>
+</label>
+<!-- Booked -->
+<div class="h-12 flex items-center justify-center rounded-lg bg-surface-container-high text-outline font-medium line-through cursor-not-allowed">
+                        10:00 AM
+                    </div>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            10:30 AM
+                        </div>
+</label>
+</div>
+<div class="flex items-center justify-between px-1 pt-4">
+<h2 class="font-headline text-lg font-bold">Afternoon Slots</h2>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="h-12 flex items-center justify-center rounded-lg bg-surface-container-high text-outline font-medium line-through cursor-not-allowed">
+                        01:00 PM
+                    </div>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            01:30 PM
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            02:00 PM
+                        </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time" type="radio"/>
+<div class="h-12 flex items-center justify-center rounded-lg bg-primary-fixed/20 border border-primary-fixed/30 text-on-primary-fixed-variant font-bold peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary transition-all">
+                            02:30 PM
+                        </div>
+</label>
+</div>
+</section>
+<!-- Reason for Visit -->
+<section class="space-y-4">
+<h2 class="font-headline text-lg font-bold px-1">Reason for Visit</h2>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border-none rounded-xl p-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all" placeholder="Please describe your symptoms or reason for the appointment..." rows="4"></textarea>
+</div>
+<p class="text-xs text-outline px-1">Your information is protected by healthcare privacy standards.</p>
+</section>
+</main>
+<!-- Fixed Footer CTA -->
+<footer class="sticky bottom-0 bg-surface/80 backdrop-blur-lg border-t border-surface-container-high p-6 z-50">
+<div class="max-w-4xl mx-auto flex items-center justify-between gap-6">
+<div class="hidden sm:block">
+<p class="text-xs font-bold text-outline uppercase tracking-widest">Summary</p>
+<p class="font-headline font-bold text-on-surface">Dr. Jenkins • Oct 12, 09:30 AM</p>
+</div>
+<button class="flex-1 sm:flex-none sm:min-w-[240px] h-14 teal-gradient text-on-primary font-headline font-bold text-lg rounded-xl medical-glow hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    Confirm Appointment
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</footer>
+</div>
+</body></html>

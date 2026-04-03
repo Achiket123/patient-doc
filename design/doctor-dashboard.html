@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DoctorPortal - Clinical Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8bfff",
+                        "primary": "#006565",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#93f2f2",
+                        "surface-bright": "#f7fafa",
+                        "on-background": "#181c1d",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#190064",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#76d6d5",
+                        "primary-container": "#008080",
+                        "error": "#ba1a1a",
+                        "secondary": "#5d4cbf",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "secondary-container": "#9888ff",
+                        "tertiary-fixed": "#ffdbcb",
+                        "background": "#f7fafa",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#76d6d5",
+                        "secondary-fixed": "#e5deff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#8b4823",
+                        "outline-variant": "#bdc9c8",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "on-tertiary-container": "#fff9f7",
+                        "outline": "#6e7979",
+                        "surface-variant": "#e0e3e3",
+                        "surface-tint": "#006a6a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2d3131",
+                        "surface-container-highest": "#e0e3e3",
+                        "on-primary-fixed": "#002020",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-container-low": "#f1f4f4",
+                        "tertiary-container": "#a96039",
+                        "surface-container-high": "#e6e9e9",
+                        "inverse-on-surface": "#eef1f1",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d7dbdb",
+                        "on-surface": "#181c1d",
+                        "on-tertiary-fixed-variant": "#733512",
+                        "on-primary-container": "#e3fffe",
+                        "on-secondary-fixed-variant": "#4532a6",
+                        "surface": "#f7fafa",
+                        "surface-container": "#ebeeee",
+                        "on-secondary-container": "#2e1390"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soap-field:focus-within {
+            background-color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(93, 76, 191, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<div class="relative flex min-h-screen w-full flex-col bg-surface overflow-x-hidden">
+<!-- Shared Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-outline-variant/10 px-10 py-3 bg-surface">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 30.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-on-surface text-lg font-headline font-bold leading-tight tracking-tight">DoctorPortal</h2>
+</div>
+<div class="relative min-w-64">
+<div class="flex items-center bg-surface-container-low rounded-xl px-4 py-2 border border-transparent focus-within:border-primary/20">
+<span class="material-symbols-outlined text-primary text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-outline w-full ml-2" placeholder="Search patient ID or name"/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/30">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold leading-none">Dr. Julianne Smith</p>
+<p class="text-xs text-outline leading-none mt-1">General Practitioner</p>
+</div>
+<div class="size-10 rounded-full bg-cover bg-center border border-outline-variant/20" data-alt="professional portrait of a confident female doctor in a white clinical coat smiling warmly" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaDJVn8e54KGpuvb1D7v8rh_2jp1aJQ4ubNv2tcIgAtW8A-3BBwmSbgRxehVdJAR865PmkzvpnrnR0_1vbNZDkEcosFC2ytOEUVZkPJnszp7LokQb7TGBrg23B0gxoobgy6YrEn66EUNu2uBPS5zSZDAVWlktlHIM2_qCsZxnnO1rr_AeWT3JPfhdBhPRTBnxMJMY-OrY9UB2H14AXxz68-savLqhSDc8KAuyEEoJfd-mfHBBUtw2rwtkkEwI2hXpjf4qJYCt4RZI')"></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Patient Queue -->
+<aside class="w-80 flex flex-col bg-surface-container-low border-r border-outline-variant/10">
+<div class="p-6">
+<h3 class="text-xl font-headline font-bold mb-1">Today's Appointments</h3>
+<p class="text-xs text-outline-variant uppercase tracking-widest font-bold">Oct 24, 2023</p>
+</div>
+<div class="flex-1 overflow-y-auto px-4 pb-6 space-y-2">
+<!-- Appointment Card: In Progress -->
+<div class="p-4 bg-surface-container-lowest rounded-xl border border-secondary/20 shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">In Progress</span>
+<span class="text-xs font-semibold text-secondary">09:30 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="profile photo of an elderly gentleman with grey hair and glasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHcXrmO2zjI-UrEJgWJ0R976FLaGQYNBQT0faQURGFY7kD1PpZ2I5w0xEYOucRdOneEo0yycyuQQvyAbBjlKW9nW5GgYToK0jM57xHir7XrPPR2KAVM3jxsFwqNFYmQISls-8xN5EjCrF1rX1-GnqQyXDZqMqQA89OG4sPDETbG7O3hyHHjne2mbbgzTt0CO2oHKRwM715t5RxNYzWkUV10HGrUL82iXibyHKP6t_r97WBIq7pRMUaWq-7N7iTq0Vrl2AuIrkcbFA')"></div>
+<div>
+<h4 class="text-sm font-bold">Arthur Morgan</h4>
+<p class="text-[11px] text-outline">ID: #PT-9921</p>
+</div>
+</div>
+</div>
+<!-- Appointment Card: Waiting -->
+<div class="p-4 bg-surface-container-high/50 hover:bg-surface-container-high rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Waiting</span>
+<span class="text-xs font-semibold text-on-surface-variant">10:15 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="portrait of a young woman with curly brown hair looking neutral" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnGyhIx8DxZ7Nf3kExz7db0FNGENuvaHKDrxGtzyccyU8Ay7xGt43ON1owFkI_PuKJKiISSmcPwaK5QdQ-PsR2qkkRXVy-vtiTur1zDpPbKEcsLeid6RTGfA2CGE8tJd9LPUe7C9d39O5_UucrT3otbWyrQYZoWZrPxR9ivRbkucwNdva8xo7aw1qNFFU8E-gOebtRAh8t_NlbK_u5ngKnbhL-8qN7FBozJxgVqJLro2pkbfQhx0gAxDAar8vpoFttGhOHtzVZjsQ')"></div>
+<div>
+<h4 class="text-sm font-bold">Sadie Adler</h4>
+<p class="text-[11px] text-outline">ID: #PT-8452</p>
+</div>
+</div>
+</div>
+<!-- Appointment Card: Done -->
+<div class="p-4 opacity-60 hover:opacity-100 rounded-xl transition-all grayscale-[0.5]">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-primary-fixed text-on-primary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Done</span>
+<span class="text-xs font-semibold text-outline">08:45 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="portrait of a middle aged man with a short beard and friendly expression" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRoBM-eWJZMFVPQ2vvjGVThsMgMGtCMVIRtvuT7op2dDwcNtPbyIwsUE_yU2BaL3pGE808gw3gxpALEKFzf1znoQYyAbqvmlFiv-8xpOnWaOCJh8xZbHsdKtrTsxCC5TIntwmpWcHV9dHJ8Zz0j-BzZQPUymLsMKGSiqWIhAboyAjTXE_LIb0_PyFY0DGCO_hBxTcNGwscExEMBzMOp9LY1LIxY74OdLdKES2DKw5O2CdYuoquw0mB2xZl2fSyGZ1c96dMlUwfiEo')"></div>
+<div>
+<h4 class="text-sm font-bold">Charles Smith</h4>
+<p class="text-[11px] text-outline">ID: #PT-7731</p>
+</div>
+</div>
+</div>
+<!-- Appointment Card: Waiting -->
+<div class="p-4 bg-surface-container-high/50 hover:bg-surface-container-high rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Waiting</span>
+<span class="text-xs font-semibold text-on-surface-variant">11:00 AM</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="young boy with a bright smile wearing a colorful t-shirt" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAo3AaVysYDrU0km0O6Zsj6QrTpM_j47VVygoK_IOPGsMdkeDvgJS-gRxTxlWcg19oz3Hh1b3XtY5t9Pj5EZBAZhdmd1oiBihBcQowcazCYIkp9ve93kUQgsd6BmnEHRJjGYkvRv5XZid8pT_0Fv_L_EytK3NbMnZpMy5Pr6x2GdFydDRuELrG0juAJ6RU4sgYpJGcpfylgysIHDt1QnqxBELNMfLCZ4ybuttiZ9zeLeiIMc45XlOh8nDiePB_0h49hA_25zl_JhDk')"></div>
+<div>
+<h4 class="text-sm font-bold">Jack Marston</h4>
+<p class="text-[11px] text-outline">ID: #PT-1024</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Panel: Patient Details & SOAP Form -->
+<section class="flex-1 flex flex-col bg-surface">
+<!-- Patient Header -->
+<div class="px-8 py-6 flex justify-between items-end border-b border-outline-variant/5">
+<div class="flex items-end gap-6">
+<div class="size-24 rounded-2xl bg-cover bg-center border-4 border-surface shadow-lg" data-alt="close-up portrait of Arthur Morgan, an elderly man with wisdom in his eyes and warm lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAu4O_k_uHC1v0mo2oAZnxPFjzK10In1-FJkMzI995C9vFB9cfvMxajqSuTqknw3gZqvByAAQ4r4l47wJgA2tv_8UIfGXZ4B-bTCwyTSv7CkNL7fzz9RFxhNWaNwZ0Gep_6_vKZ_eqMV3YkJHhHV9IcHpbk18faye_2-5OhR5KnhZAEJkdQmozKf_vqq8V009WQP_u9Xhq9ebhUi-IX9STTgGIncKGEnfd0cVfL_TNyzHkZzzqIFR4UsTjdW4lea_Omh9HRCf4KQVo')"></div>
+<div class="mb-1">
+<h2 class="text-3xl font-headline font-extrabold leading-none">Arthur Morgan</h2>
+<div class="flex gap-4 mt-2">
+<p class="text-sm text-outline font-medium"><span class="text-on-surface-variant">Age:</span> 64 yrs</p>
+<p class="text-sm text-outline font-medium"><span class="text-on-surface-variant">DOB:</span> June 12, 1959</p>
+<p class="text-sm text-outline font-medium"><span class="text-on-surface-variant">Sex:</span> Male</p>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant text-on-surface-variant font-bold text-sm rounded-xl hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg">history</span>
+                            Past Records
+                        </button>
+<button class="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-secondary to-secondary-container text-on-secondary font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all">
+<span class="material-symbols-outlined text-lg">save</span>
+                            Finalize Encounter
+                        </button>
+</div>
+</div>
+<!-- Vitals Strip -->
+<div class="px-8 py-6">
+<div class="grid grid-cols-5 gap-4">
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-secondary/10 rounded-xl text-secondary">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">Heart Rate</p>
+<p class="text-lg font-headline font-extrabold">72 <span class="text-xs font-normal text-outline">bpm</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4 border-l-4 border-error/30">
+<div class="p-2 bg-error/10 rounded-xl text-error">
+<span class="material-symbols-outlined">blood_pressure</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">BP</p>
+<p class="text-lg font-headline font-extrabold">145/92 <span class="text-xs font-normal text-outline">mmHg</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-primary/10 rounded-xl text-primary">
+<span class="material-symbols-outlined">thermostat</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">Temp</p>
+<p class="text-lg font-headline font-extrabold">98.6 <span class="text-xs font-normal text-outline">°F</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-tertiary/10 rounded-xl text-tertiary">
+<span class="material-symbols-outlined">air</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">SpO2</p>
+<p class="text-lg font-headline font-extrabold">98 <span class="text-xs font-normal text-outline">%</span></p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl flex items-center gap-4">
+<div class="p-2 bg-secondary/10 rounded-xl text-secondary">
+<span class="material-symbols-outlined">weight</span>
+</div>
+<div>
+<p class="text-[10px] font-bold text-outline uppercase tracking-wider">Weight</p>
+<p class="text-lg font-headline font-extrabold">184 <span class="text-xs font-normal text-outline">lbs</span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- SOAP Form -->
+<div class="flex-1 overflow-y-auto px-8 pb-8">
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/10 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">edit_note</span>
+<h3 class="text-xl font-headline font-bold">Clinical SOAP Note</h3>
+</div>
+<form class="grid grid-cols-2 gap-8">
+<!-- Subjective -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Subjective
+                                    <span class="material-symbols-outlined text-sm opacity-50">person</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Patient's reported symptoms, chief complaint, and history..."></textarea>
+</div>
+<!-- Objective -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Objective
+                                    <span class="material-symbols-outlined text-sm opacity-50">visibility</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Physical examination findings, vital signs, and laboratory data..."></textarea>
+</div>
+<!-- Assessment -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Assessment
+                                    <span class="material-symbols-outlined text-sm opacity-50">psychology</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Diagnosis, differential diagnosis, and clinical reasoning..."></textarea>
+</div>
+<!-- Plan -->
+<div class="soap-field flex flex-col gap-2 p-5 bg-surface-container-low rounded-2xl transition-all border border-transparent">
+<label class="text-[11px] font-bold text-secondary uppercase tracking-widest flex justify-between items-center">
+                                    Plan
+                                    <span class="material-symbols-outlined text-sm opacity-50">event_note</span>
+</label>
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-sm leading-relaxed min-h-[120px] placeholder:text-outline/40" placeholder="Treatment, prescriptions, referrals, and follow-up instructions..."></textarea>
+</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>
