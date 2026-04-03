@@ -24,7 +24,7 @@ export default function DoctorSchedule() {
 
         const unsubscribe = onSnapshot(slotsRef, (snap) => {
             const fetched = snap.docs.map(d => ({ id: d.id, ...(d.data() as Record<string, any>) }));
-            fetched.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+            fetched.sort((a: any, b: any) => new Date(a.time).getTime() - new Date(b.time).getTime());
             setSlots(fetched);
             setLoading(false);
         });
